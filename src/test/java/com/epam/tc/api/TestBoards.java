@@ -2,13 +2,11 @@ package com.epam.tc.api;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.epam.tc.api.data.Resources;
 import com.epam.tc.api.entities.Board;
 import com.epam.tc.api.service.TrelloServiceObj;
 import com.epam.tc.api.specs.ResponseSpecifications;
-import io.restassured.http.Method;
 import io.restassured.response.Response;
-import java.util.List;
+import org.apache.http.HttpStatus;
 import org.hamcrest.Matchers;
 import org.testng.annotations.Test;
 
@@ -32,10 +30,10 @@ public class TestBoards {
         Board initBoard = TrelloServiceObj.getBoard(createResponse);
 
         Response modifyResponse = TrelloServiceObj.putBoardName(initBoard.getId(), "newName");
-        Board board = TrelloServiceObj.getBoard(createResponse);
+        Board board = TrelloServiceObj.getBoard(modifyResponse);
 
         modifyResponse.then().assertThat().spec(ResponseSpecifications.goodResponse);
-        assertThat("Checking new board name", board.getName(), Matchers.equalTo("newName"));
+        assertThat("Checking put board name", board.getName(), Matchers.equalTo("newName"));
         TrelloServiceObj.deleteAllBoards();
     }
 
@@ -43,10 +41,8 @@ public class TestBoards {
     public void checkBoardDeleting() {
         Response createResponse = TrelloServiceObj.createBoard("Board");
         Board initBoard = TrelloServiceObj.getBoard(createResponse);
-
-
-        assertThat("Checking new board name", board.getName(), Matchers.equalTo("newName"));
-        TrelloServiceObj.deleteAllBoards();
+        TrelloServiceObj.deleteBoard(initBoard)
+                        .then().spec(ResponseSpecifications.goodDeleteResponse);
     }
 
 }
