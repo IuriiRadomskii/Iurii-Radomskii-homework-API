@@ -17,6 +17,7 @@ public class RequestSpecifications {
         SPEC_WITH_API_KEYS_PARAMS
             .setAccept(ContentType.JSON)
             .setBaseUri(BASE_URI)
+            .addHeader("Content-Type", "application/json; charset=utf-8")
             .build();
 
 }

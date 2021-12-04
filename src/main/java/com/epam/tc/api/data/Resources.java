@@ -3,7 +3,7 @@ package com.epam.tc.api.data;
 public enum Resources {
 
     BOARDS("/1/boards/"),
-    MEMBERS_BOARDS("/1/members/iura_radomskii/boards/");
+    ALL_MEMBERS_BOARDS("/1/members/iura_radomskii/boards/");
     private String name;
 
     Resources(String name) {

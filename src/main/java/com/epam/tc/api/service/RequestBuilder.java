@@ -6,8 +6,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RequestBuilder {
+
     private Map<String, String> parameters = new HashMap<>();
-    private Method requestMethod = Method.GET;
+    private Method requestMethod;
+
+    public RequestBuilder() {}
+
+    public RequestBuilder(Map<String, String> params) {
+        this.parameters.putAll(params);
+    }
 
     public RequestBuilder setMethod(Method method) {
         requestMethod = method;
@@ -18,7 +25,6 @@ public class RequestBuilder {
         parameters.put(ParametersName.NAME, name);
         return this;
     }
-
 
     public TrelloServiceObj buildRequest() {
         return new TrelloServiceObj(parameters, requestMethod);
