@@ -7,6 +7,7 @@ import java.util.Map;
 public class RequestBuilder {
 
     public static final String NAME = "name";
+    public static final String BOARD_ID = "idBoard";
 
     private Map<String, String> parameters = new HashMap<>();
     private Method requestMethod;
@@ -22,8 +23,13 @@ public class RequestBuilder {
         return this;
     }
 
-    public RequestBuilder setBoardName(String boardName) {
+    public RequestBuilder setName(String boardName) {
         parameters.put(NAME, boardName);
+        return this;
+    }
+
+    public RequestBuilder setBoardID(String boardID) {
+        parameters.put(BOARD_ID, boardID);
         return this;
     }
 

@@ -109,7 +109,7 @@
                 <artifactId>jsonschema2pojo-maven-plugin</artifactId>
                 <version>${jsonschema2pojo-maven-plugin.version}</version>
                 <configuration>
-                    <sourceDirectory>${basedir}/src/main/resources/com.epam.tc.api.schemes</sourceDirectory>
+                    <sourceDirectory>${basedir}/src/main/resources/schemes</sourceDirectory>
                     <outputDirectory>${basedir}/src/main/java</outputDirectory>
                     <targetPackage>entities</targetPackage>
                     <addCompileSourceRoot>true</addCompileSourceRoot>
