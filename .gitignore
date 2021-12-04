@@ -1,0 +1,7 @@
+target
+*.iml
+*.docx
+.idea
+etc.
+.allure
+commands
