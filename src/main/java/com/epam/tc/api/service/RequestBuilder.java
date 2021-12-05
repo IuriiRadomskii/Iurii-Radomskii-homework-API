@@ -12,7 +12,8 @@ public class RequestBuilder {
     private Map<String, String> parameters = new HashMap<>();
     private Method requestMethod;
 
-    public RequestBuilder() {}
+    public RequestBuilder() {
+    }
 
     public RequestBuilder(Map<String, String> params) {
         this.parameters.putAll(params);
@@ -36,4 +37,5 @@ public class RequestBuilder {
     public TrelloServiceObj buildRequest() {
         return new TrelloServiceObj(parameters, requestMethod);
     }
+
 }

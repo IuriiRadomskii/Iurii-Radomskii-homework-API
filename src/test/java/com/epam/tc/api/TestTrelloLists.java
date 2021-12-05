@@ -1,4 +1,4 @@
-package com.epam.tc.api;
+/*package com.epam.tc.api;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -57,4 +57,4 @@ public class TestTrelloLists {
         assertThat("Checking lists boardID", modifiedList.getIdBoard(), Matchers.equalTo(testBoard.getId()));
     }
 
-}
+}*/
