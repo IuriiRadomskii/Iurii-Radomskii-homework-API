@@ -22,28 +22,4 @@ public class LIstServiceObject extends TrelloServiceObj {
         return new RequestBuilder(params);
     }
 
-    public static Response createTrelloList(String listName, String boardID) {
-        return TrelloServiceObj
-            .getRequestBuilder()
-            .setMethod(Method.POST)
-            .setName(listName)
-            .setBoardID(boardID)
-            .buildRequest()
-            .sendRequest(Resources.LISTS);
-    }
-
-    public static Response putTrelloListName(String listName, String boardID, String listID) {
-        return TrelloServiceObj
-            .getRequestBuilder()
-            .setMethod(Method.PUT)
-            .setName(listName)
-            .setBoardID(boardID)
-            .buildRequest()
-            .sendRequest(Resources.LISTS, listID);
-    }
-
-    //TODO generify get method to be used to all entities
-    public static TrelloList getTrelloList(Response response) {
-        return new Gson().fromJson(response.asString().trim(), new TypeToken<TrelloList>() {}.getType());
-    }
 }

@@ -9,7 +9,7 @@ import io.restassured.http.Method;
 import io.restassured.response.Response;
 import java.util.List;
 
-public class BoardSteps {
+public class BoardSteps extends BaseSteps {
 
     public Response createBoard(String boardName) {
         return BoardServiceObject
@@ -50,13 +50,5 @@ public class BoardSteps {
         }
     }
 
-
-    public <T> T getEntity(Response response, Class<T> cls) {
-        return new Gson().fromJson(response.asString().trim(), new TypeToken<T>() {}.getType());
-    }
-
-    public <T> List<T> getEntities(Response response, Class<T> cls) {
-        return new Gson().fromJson(response.asString().trim(), new TypeToken<List<T>>() {}.getType());
-    }
 
 }
