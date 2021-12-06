@@ -1,4 +1,4 @@
-package com.epam.tc.api.service;
+/*package com.epam.tc.api.service;
 
 import com.epam.tc.api.data.Resources;
 import com.epam.tc.api.entities.TrelloList;
@@ -22,4 +22,4 @@ public class LIstServiceObject extends TrelloServiceObj {
         return new RequestBuilder(params);
     }
 
-}
+}*/
