@@ -3,6 +3,7 @@ package com.epam.tc.api.service;
 import io.restassured.http.Method;
 import java.util.HashMap;
 import java.util.Map;
+//TODO generify ServiceObj
 
 public class BoardServiceObject extends AbsctractTrelloServiceObj {
 
