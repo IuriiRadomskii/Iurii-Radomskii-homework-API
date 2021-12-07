@@ -5,8 +5,8 @@ import java.util.Map;
 
 public class BoardServiceObject extends AbsctractTrelloServiceObj {
 
-    BoardServiceObject(Map<String, String> parameters, Method requestMethod) {
-        super(parameters, requestMethod);
+    BoardServiceObject(Map<String, String> queryParams, Map<String, String> pathParams, Method requestMethod) {
+        super(queryParams, pathParams, requestMethod);
     }
 
     public static BoardBuilder getRequestBuilder() {
@@ -29,7 +29,7 @@ public class BoardServiceObject extends AbsctractTrelloServiceObj {
 
         @Override
         public BoardServiceObject buildRequest() {
-            return new BoardServiceObject(parameters, requestMethod);
+            return new BoardServiceObject(queryParams, pathParams, requestMethod);
         }
     }
 

@@ -5,8 +5,8 @@ import java.util.Map;
 
 public class ListServiceObject extends AbsctractTrelloServiceObj {
 
-    ListServiceObject(Map<String, String> parameters, Method requestMethod) {
-        super(parameters, requestMethod);
+    ListServiceObject(Map<String, String> queryParams, Map<String, String> pathParams, Method requestMethod) {
+        super(queryParams, pathParams, requestMethod);
     }
 
     public static ListBuilder getRequestBuilder() {
@@ -29,7 +29,7 @@ public class ListServiceObject extends AbsctractTrelloServiceObj {
 
         @Override
         public ListServiceObject buildRequest() {
-            return new ListServiceObject(queryParams, requestMethod);
+            return new ListServiceObject(queryParams, pathParams, requestMethod);
         }
     }
 

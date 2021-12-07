@@ -75,8 +75,19 @@ public abstract class AbsctractTrelloServiceObj {
             .given(RequestSpecifications.DEFAULT_SPEC).log().all()
             .pathParams(pathParams)
             .queryParams(queryParams)
-            .request(requestMethod)
+            .request(requestMethod, String.valueOf(Resources.TEMPLATE))
             .prettyPeek();
     }
+
+    public Response sendRequest(Resources resources) {
+        return RestAssured
+            .given(RequestSpecifications.DEFAULT_SPEC).log().all()
+            .pathParams(pathParams)
+            .queryParams(queryParams)
+            .request(requestMethod, String.valueOf(resources))
+            .prettyPeek();
+    }
+
+    public abstract  <P> P mapResponseToPojo(Response response);
 
 }

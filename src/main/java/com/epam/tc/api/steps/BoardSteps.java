@@ -9,22 +9,24 @@ import java.util.List;
 
 public class BoardSteps extends BaseSteps {
 
+
+
     public Response createBoard(String boardName) {
         return BoardServiceObject
             .getRequestBuilder()
             .setMethod(Method.POST)
             .setName(boardName)
+            .addPathParam("resource", "boards")
             .buildRequest()
-            .sendRequest(Resources.BOARDS);
+            .sendRequest();
     }
 
     public Board getBoard(Board board) {
-        return getEntityFromJson(
-            BoardServiceObject
+        return BoardServiceObject
             .getRequestBuilder()
             .setMethod(Method.GET)
             .buildRequest()
-            .sendRequest(Resources.BOARDS, board.getId()), Board.class);
+            .sendRequest().as(Board.class);
     }
 
     public Response putBoardName(Board board) {
@@ -33,7 +35,7 @@ public class BoardSteps extends BaseSteps {
             .setMethod(Method.PUT)
             .setName(board.getName())
             .buildRequest()
-            .sendRequest(Resources.BOARDS, board.getId());
+            .sendRequest();
     }
 
     public Response deleteBoard(Board board) {
@@ -41,7 +43,7 @@ public class BoardSteps extends BaseSteps {
             .getRequestBuilder()
             .setMethod(Method.DELETE)
             .buildRequest()
-            .sendRequest(Resources.BOARDS, board.getId());
+            .sendRequest();
     }
 
     public void deleteAllBoards() {
