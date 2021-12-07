@@ -8,19 +8,19 @@ import java.util.List;
 
 public class BaseSteps {
 
-    public <T> T getEntity(Response response, Class<T> cls) {
+    public <T> T getEntityFromJson(Response response, Class<T> cls) {
         return new Gson().fromJson(response.asString().trim(), new TypeToken<T>() {}.getType());
     }
 
-    public <T> List<T> getEntities(Response response, Class<T> cls) {
+    public <T> List<T> getEntitiesFromJson(Response response, Class<T> cls) {
         return new Gson().fromJson(response.asString().trim(), new TypeToken<List<T>>() {}.getType());
     }
 
-    public Board getBoard(Response response) {
+    public Board getBoardFromJson(Response response) {
         return new Gson().fromJson(response.asString().trim(), new TypeToken<Board>() {}.getType());
     }
 
-    public List<Board> getBoards(Response response) {
+    public List<Board> getBoardsFromJson(Response response) {
         return new Gson().fromJson(response.asString().trim(), new TypeToken<List<Board>>() {}.getType());
     }
 }

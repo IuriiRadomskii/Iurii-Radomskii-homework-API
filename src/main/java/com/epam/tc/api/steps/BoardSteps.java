@@ -3,8 +3,6 @@ package com.epam.tc.api.steps;
 import com.epam.tc.api.data.Resources;
 import com.epam.tc.api.entities.Board;
 import com.epam.tc.api.service.BoardServiceObject;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import io.restassured.http.Method;
 import io.restassured.response.Response;
 import java.util.List;
@@ -20,13 +18,13 @@ public class BoardSteps extends BaseSteps {
             .sendRequest(Resources.BOARDS);
     }
 
-    public Board getBoard(String boardID) {
-        return getEntity(
+    public Board getBoard(Board board) {
+        return getEntityFromJson(
             BoardServiceObject
             .getRequestBuilder()
             .setMethod(Method.GET)
             .buildRequest()
-            .sendRequest(Resources.BOARDS, boardID), Board.class);
+            .sendRequest(Resources.BOARDS, board.getId()), Board.class);
     }
 
     public Response putBoardName(Board board) {
@@ -53,7 +51,7 @@ public class BoardSteps extends BaseSteps {
                 .setMethod(Method.GET)
                 .buildRequest()
                 .sendRequest(Resources.ALL_MEMBERS_BOARDS);
-        List<Board> boards = getBoards(response);
+        List<Board> boards = getBoardsFromJson(response);
         for (Board board : boards) {
             deleteBoard(board);
         }

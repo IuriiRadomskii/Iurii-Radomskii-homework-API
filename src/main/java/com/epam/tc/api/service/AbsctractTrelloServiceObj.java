@@ -11,10 +11,12 @@ import java.util.Map;
 public abstract class AbsctractTrelloServiceObj {
 
     protected Method requestMethod;
-    protected Map<String, String> parameters;
+    protected Map<String, String> queryParams;
+    protected Map<String, String> pathParams;
 
-    AbsctractTrelloServiceObj(Map<String, String> parameters, Method requestMethod) {
-        this.parameters = parameters;
+    AbsctractTrelloServiceObj(Map<String, String> queryParams, Map<String, String> pathParams, Method requestMethod) {
+        this.queryParams = queryParams;
+        this.pathParams = pathParams;
         this.requestMethod = requestMethod;
     }
 
@@ -24,14 +26,15 @@ public abstract class AbsctractTrelloServiceObj {
         public static final String BOARD_ID = "idBoard";
         public static final String LIST_ID = "idList";
 
-        protected Map<String, String> parameters = new HashMap<>();
+        protected Map<String, String> queryParams = new HashMap<>();
+        protected Map<String, String> pathParams = new HashMap<>();
         protected Method requestMethod;
 
         public AbstractBuilder() {
         }
 
         public AbstractBuilder(Map<String, String> params) {
-            this.parameters.putAll(params);
+            this.queryParams.putAll(params);
         }
 
         protected B self() {
@@ -43,13 +46,23 @@ public abstract class AbsctractTrelloServiceObj {
             return self();
         }
 
-        public B setName(String boardName) {
-            parameters.put(NAME, boardName);
+        public B setName(String name) {
+            queryParams.put(NAME, name);
             return self();
         }
 
         public B setID(String idName, String boardID) {
-            parameters.put(idName, boardID);
+            queryParams.put(idName, boardID);
+            return self();
+        }
+
+        public B addQueryParam(String paramName, String paramValue) {
+            queryParams.put(paramName, paramValue);
+            return self();
+        }
+
+        public B addPathParam(String paramName, String paramValue) {
+            pathParams.put(paramName, paramValue);
             return self();
         }
 
@@ -60,7 +73,7 @@ public abstract class AbsctractTrelloServiceObj {
     public Response sendRequest(Resources resource) {
         return RestAssured
             .given(RequestSpecifications.DEFAULT_SPEC).log().all()
-            .queryParams(parameters)
+            .queryParams(queryParams)
             .request(requestMethod, resource.toString())
             .prettyPeek();
     }
@@ -68,7 +81,7 @@ public abstract class AbsctractTrelloServiceObj {
     public Response sendRequest(Resources resource, String additional) {
         return RestAssured
             .given(RequestSpecifications.DEFAULT_SPEC).log().all()
-            .queryParams(parameters)
+            .queryParams(queryParams)
             .request(requestMethod, resource.toString() + additional + "/")
             .prettyPeek();
     }

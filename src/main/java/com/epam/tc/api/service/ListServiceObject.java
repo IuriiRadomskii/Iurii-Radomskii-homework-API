@@ -29,7 +29,7 @@ public class ListServiceObject extends AbsctractTrelloServiceObj {
 
         @Override
         public ListServiceObject buildRequest() {
-            return new ListServiceObject(parameters, requestMethod);
+            return new ListServiceObject(queryParams, requestMethod);
         }
     }
 
