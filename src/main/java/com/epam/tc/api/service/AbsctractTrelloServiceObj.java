@@ -70,19 +70,13 @@ public abstract class AbsctractTrelloServiceObj {
 
     }
 
-    public Response sendRequest(Resources resource) {
+    public Response sendRequest() {
         return RestAssured
             .given(RequestSpecifications.DEFAULT_SPEC).log().all()
+            .pathParams(pathParams)
             .queryParams(queryParams)
-            .request(requestMethod, resource.toString())
+            .request(requestMethod)
             .prettyPeek();
     }
 
-    public Response sendRequest(Resources resource, String additional) {
-        return RestAssured
-            .given(RequestSpecifications.DEFAULT_SPEC).log().all()
-            .queryParams(queryParams)
-            .request(requestMethod, resource.toString() + additional + "/")
-            .prettyPeek();
-    }
 }
