@@ -6,7 +6,7 @@ import com.epam.tc.api.service.BoardServiceObject;
 import io.restassured.http.Method;
 import io.restassured.response.Response;
 
-public class ListSteps extends BaseSteps {
+public class ListSteps {
 
     public Response createList(String listName, String boardID) {
         return BoardServiceObject

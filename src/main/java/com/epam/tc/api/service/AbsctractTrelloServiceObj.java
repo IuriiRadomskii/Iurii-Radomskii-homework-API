@@ -88,6 +88,8 @@ public abstract class AbsctractTrelloServiceObj {
             .prettyPeek();
     }
 
-    public abstract  <P> P mapResponseToPojo(Response response);
+    public <P> P mapResponseToPojo(Response response, Class<P> cls) {
+        return response.as(cls);
+    }
 
 }

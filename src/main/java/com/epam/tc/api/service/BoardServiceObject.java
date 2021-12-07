@@ -1,6 +1,8 @@
 package com.epam.tc.api.service;
 
+import com.epam.tc.api.entities.Board;
 import io.restassured.http.Method;
+import io.restassured.response.Response;
 import java.util.Map;
 
 public class BoardServiceObject extends AbsctractTrelloServiceObj {
@@ -20,7 +22,6 @@ public class BoardServiceObject extends AbsctractTrelloServiceObj {
     public static class BoardBuilder extends AbstractBuilder<BoardBuilder, BoardServiceObject> {
 
         BoardBuilder() {
-
         }
 
         BoardBuilder(Map<String, String> additionalParameters) {
@@ -32,5 +33,4 @@ public class BoardServiceObject extends AbsctractTrelloServiceObj {
             return new BoardServiceObject(queryParams, pathParams, requestMethod);
         }
     }
-
 }

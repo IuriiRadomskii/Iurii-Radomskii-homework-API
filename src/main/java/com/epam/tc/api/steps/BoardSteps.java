@@ -7,7 +7,7 @@ import io.restassured.http.Method;
 import io.restassured.response.Response;
 import java.util.List;
 
-public class BoardSteps extends BaseSteps {
+public class BoardSteps {
 
 
 
