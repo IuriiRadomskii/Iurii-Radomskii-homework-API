@@ -20,13 +20,22 @@ public class BoardSteps extends BaseSteps {
             .sendRequest(Resources.BOARDS);
     }
 
-    public Response putBoardName(String boardID, String newName) {
+    public Board getBoard(String boardID) {
+        return getEntity(
+            BoardServiceObject
+            .getRequestBuilder()
+            .setMethod(Method.GET)
+            .buildRequest()
+            .sendRequest(Resources.BOARDS, boardID), Board.class);
+    }
+
+    public Response putBoardName(Board board) {
         return BoardServiceObject
             .getRequestBuilder()
             .setMethod(Method.PUT)
-            .setName(newName)
+            .setName(board.getName())
             .buildRequest()
-            .sendRequest(Resources.BOARDS, boardID);
+            .sendRequest(Resources.BOARDS, board.getId());
     }
 
     public Response deleteBoard(Board board) {
@@ -44,7 +53,7 @@ public class BoardSteps extends BaseSteps {
                 .setMethod(Method.GET)
                 .buildRequest()
                 .sendRequest(Resources.ALL_MEMBERS_BOARDS);
-        List<Board> boards = getEntities(response, Board.class);
+        List<Board> boards = getBoards(response);
         for (Board board : boards) {
             deleteBoard(board);
         }

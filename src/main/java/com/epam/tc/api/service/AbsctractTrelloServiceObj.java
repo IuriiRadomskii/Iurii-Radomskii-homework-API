@@ -24,8 +24,8 @@ public abstract class AbsctractTrelloServiceObj {
         public static final String BOARD_ID = "idBoard";
         public static final String LIST_ID = "idList";
 
-        private Map<String, String> parameters = new HashMap<>();
-        private Method requestMethod;
+        protected Map<String, String> parameters = new HashMap<>();
+        protected Method requestMethod;
 
         public AbstractBuilder() {
         }
@@ -38,18 +38,18 @@ public abstract class AbsctractTrelloServiceObj {
             return (B) this;
         }
 
-        protected B setMethod(Method method) {
+        public B setMethod(Method method) {
             requestMethod = method;
             return self();
         }
 
-        protected B setName(String boardName) {
+        public B setName(String boardName) {
             parameters.put(NAME, boardName);
             return self();
         }
 
-        protected B setBoardID(String boardID) {
-            parameters.put(BOARD_ID, boardID);
+        public B setID(String idName, String boardID) {
+            parameters.put(idName, boardID);
             return self();
         }
 

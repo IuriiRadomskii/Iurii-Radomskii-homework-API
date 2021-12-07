@@ -1,30 +1,49 @@
 package com.epam.tc.api.steps;
 
 import com.epam.tc.api.data.Resources;
-import com.epam.tc.api.service.AbsctractTrelloServiceObj;
+import com.epam.tc.api.entities.Board;
+import com.epam.tc.api.entities.TrelloList;
+import com.epam.tc.api.service.BoardServiceObject;
+import com.epam.tc.api.service.ListServiceObject;
 import io.restassured.http.Method;
 import io.restassured.response.Response;
 
 public class ListSteps extends BaseSteps {
 
-    public static Response createTrelloList(String listName, String boardID) {
-        return AbsctractTrelloServiceObj
+    public Response createList(String listName, String boardID) {
+        return BoardServiceObject
             .getRequestBuilder()
             .setMethod(Method.POST)
             .setName(listName)
-            .setBoardID(boardID)
+            .setID("idList", boardID)
             .buildRequest()
             .sendRequest(Resources.LISTS);
     }
 
-    public static Response putTrelloListName(String listName, String boardID, String listID) {
-        return AbsctractTrelloServiceObj
+    public TrelloList getList(String idList) {
+        return getEntity(
+            BoardServiceObject
+                .getRequestBuilder()
+                .setMethod(Method.GET)
+                .buildRequest()
+                .sendRequest(Resources.LISTS, idList), TrelloList.class);
+    }
+
+    public Response putListName(TrelloList  trelloList) {
+        return BoardServiceObject
             .getRequestBuilder()
             .setMethod(Method.PUT)
-            .setName(listName)
-            .setBoardID(boardID)
+            .setName(trelloList.getName())
             .buildRequest()
-            .sendRequest(Resources.LISTS, listID);
+            .sendRequest(Resources.LISTS, trelloList.getId());
+    }
+
+    public Response deleteList(TrelloList trelloList) {
+        return BoardServiceObject
+            .getRequestBuilder()
+            .setMethod(Method.DELETE)
+            .buildRequest()
+            .sendRequest(Resources.LISTS, trelloList.getId());
     }
 
 

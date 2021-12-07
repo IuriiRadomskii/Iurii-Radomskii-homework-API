@@ -15,7 +15,7 @@ public class TestBoards extends BaseTest {
     @Test
     public void checkBoardPosting() {
         Response createResponse = boardSteps.createBoard("Board");
-        Board initBoard = boardSteps.getEntity(createResponse, Board.class);
+        Board initBoard = boardSteps.getBoard(createResponse);
 
         createResponse.then().assertThat().spec(ResponseSpecifications.goodResponse);
         assertThat("Checking initial board name", initBoard.getName(), Matchers.equalTo("Board"));
@@ -26,8 +26,9 @@ public class TestBoards extends BaseTest {
     public void checkBoardModifying() {
         Response createResponse = boardSteps.createBoard("Board");
         Board initBoard = boardSteps.getEntity(createResponse, Board.class);
+        initBoard.setName("newName");
 
-        Response modifyResponse = boardSteps.putBoardName(initBoard.getId(), "newName");
+        Response modifyResponse = boardSteps.putBoardName(initBoard);
         Board board = boardSteps.getEntity(modifyResponse, Board.class);
 
         modifyResponse.then().assertThat().spec(ResponseSpecifications.goodResponse);
