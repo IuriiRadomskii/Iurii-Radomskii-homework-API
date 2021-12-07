@@ -13,18 +13,20 @@ public class ListSteps {
             .getRequestBuilder()
             .setMethod(Method.POST)
             .setName(listName)
-            .setID("idList", boardID)
+            .setID("idBoard", boardID)
+            .addPathParam("resource", Resources.LIST_RESOURCE)
             .buildRequest()
-            .sendRequest(Resources.LISTS);
+            .sendRequest(Resources.TEMPLATE_MAIN_RESOURCE);
     }
 
     public TrelloList getList(String idList) {
-        return getEntityFromJson(
-            BoardServiceObject
+        return BoardServiceObject
                 .getRequestBuilder()
                 .setMethod(Method.GET)
+                .addQueryParam("idList", idList)
                 .buildRequest()
-                .sendRequest(Resources.LISTS, idList), TrelloList.class);
+                .sendRequest(Resources.TEMPLATE_MAIN_RESOURCE)
+                .as(TrelloList.class);
     }
 
     public Response putListName(TrelloList  trelloList) {
@@ -33,7 +35,7 @@ public class ListSteps {
             .setMethod(Method.PUT)
             .setName(trelloList.getName())
             .buildRequest()
-            .sendRequest(Resources.LISTS, trelloList.getId());
+            .sendRequest(Resources.TEMPLATE_MAIN_RESOURCE);
     }
 
     public Response deleteList(TrelloList trelloList) {
@@ -41,7 +43,7 @@ public class ListSteps {
             .getRequestBuilder()
             .setMethod(Method.DELETE)
             .buildRequest()
-            .sendRequest(Resources.LISTS, trelloList.getId());
+            .sendRequest(Resources.TEMPLATE_MAIN_RESOURCE);
     }
 
 

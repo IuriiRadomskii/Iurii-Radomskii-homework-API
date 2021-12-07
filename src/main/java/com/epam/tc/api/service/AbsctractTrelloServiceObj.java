@@ -1,5 +1,6 @@
 package com.epam.tc.api.service;
 
+import com.epam.tc.api.data.ParametersName;
 import com.epam.tc.api.data.Resources;
 import com.epam.tc.api.specs.RequestSpecifications;
 import io.restassured.RestAssured;
@@ -22,9 +23,7 @@ public abstract class AbsctractTrelloServiceObj {
 
     public abstract static class AbstractBuilder<B extends AbstractBuilder<B, T>, T extends AbsctractTrelloServiceObj> {
 
-        public static final String NAME = "name";
-        public static final String BOARD_ID = "idBoard";
-        public static final String LIST_ID = "idList";
+
 
         protected Map<String, String> queryParams = new HashMap<>();
         protected Map<String, String> pathParams = new HashMap<>();
@@ -47,7 +46,7 @@ public abstract class AbsctractTrelloServiceObj {
         }
 
         public B setName(String name) {
-            queryParams.put(NAME, name);
+            queryParams.put(ParametersName.NAME, name);
             return self();
         }
 
@@ -70,25 +69,17 @@ public abstract class AbsctractTrelloServiceObj {
 
     }
 
-    public Response sendRequest() {
+    public Response sendRequest(String template) {
         return RestAssured
             .given(RequestSpecifications.DEFAULT_SPEC).log().all()
             .pathParams(pathParams)
             .queryParams(queryParams)
-            .request(requestMethod, String.valueOf(Resources.TEMPLATE))
+            .request(requestMethod, template)
             .prettyPeek();
     }
 
-    public Response sendRequest(Resources resources) {
-        return RestAssured
-            .given(RequestSpecifications.DEFAULT_SPEC).log().all()
-            .pathParams(pathParams)
-            .queryParams(queryParams)
-            .request(requestMethod, String.valueOf(resources))
-            .prettyPeek();
-    }
 
-    public <P> P mapResponseToPojo(Response response, Class<P> cls) {
+    public static <P> P mapResponseToPojo(Response response, Class<P> cls) {
         return response.as(cls);
     }
 
