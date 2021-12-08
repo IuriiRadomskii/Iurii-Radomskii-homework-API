@@ -2,6 +2,7 @@ package com.epam.tc.api;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.epam.tc.api.data.TrelloDataProvider;
 import com.epam.tc.api.entities.Board;
 import com.epam.tc.api.specs.RequestSpecifications;
 import com.epam.tc.api.specs.ResponseSpecs;
@@ -23,29 +24,28 @@ public class TestBoards extends BaseTest {
         boardSteps.deleteAllBoards();
     }
 
-    @Test
-    public void checkBoardPosting() {
-        Response createResponse = boardSteps.createBoard("Board", RequestSpecifications.DEFAULT_SPEC, creds);
+    @Test(dataProviderClass = TrelloDataProvider.class, dataProvider = "boardData")
+    public void checkBoardPosting(Board board) {
+        Response createResponse = boardSteps.createBoard(board.getName(), RequestSpecifications.DEFAULT_SPEC, creds);
         Board initBoard = boardSteps.boardToPojo(createResponse);
-        boardSteps.checkResponse(createResponse, ResponseSpecs.goodResponse);
-        assertThat("Checking initial board name", initBoard.getName(), Matchers.equalTo("Board"));
+        assertThat("Checking initial board name", initBoard.getName(), Matchers.equalTo(board.getName()));
     }
 
-    @Test
-    public void checkBoardModifying() {
-        Response createResponse = boardSteps.createBoard("Board", RequestSpecifications.DEFAULT_SPEC, creds);
+    @Test(dataProviderClass = TrelloDataProvider.class, dataProvider = "boardData")
+    public void checkBoardUpdating(Board newBoard) {
+        Response createResponse = boardSteps.createBoard("initBoardName", RequestSpecifications.DEFAULT_SPEC, creds);
         Board initBoard = boardSteps.boardToPojo(createResponse);
 
-        initBoard.setName("newName");
+        initBoard.setName(newBoard.getName());
+
         Response modifyResponse = boardSteps.putBoardName(initBoard, RequestSpecifications.DEFAULT_SPEC, creds);
         Board board = boardSteps.boardToPojo(modifyResponse);
-        boardSteps.checkResponse(modifyResponse, ResponseSpecs.goodResponse);
-        assertThat("Checking put board name", board.getName(), Matchers.equalTo("newName"));
+        assertThat("Checking put board name", board.getName(), Matchers.equalTo(newBoard.getName()));
     }
 
-    @Test
-    public void checkBoardDeleting() {
-        Response createResponse = boardSteps.createBoard("Board", RequestSpecifications.DEFAULT_SPEC, creds);
+    @Test(dataProviderClass = TrelloDataProvider.class, dataProvider = "boardData")
+    public void checkBoardDeleting(Board board) {
+        Response createResponse = boardSteps.createBoard(board.getName(), RequestSpecifications.DEFAULT_SPEC, creds);
         Board initBoard = boardSteps.boardToPojo(createResponse);
         Response deleteResponse = boardSteps.deleteBoard(initBoard, RequestSpecifications.DEFAULT_SPEC, creds);
         boardSteps.checkResponse(deleteResponse, ResponseSpecs.goodDeleteResponse);

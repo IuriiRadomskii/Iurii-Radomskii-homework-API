@@ -27,4 +27,10 @@ public class ResponseSpecs {
         .expectStatusCode(HttpStatus.SC_BAD_REQUEST)
         .build();
 
+    public static final ResponseSpecification invalidKeyResponse = new ResponseSpecBuilder()
+        .expectContentType(ContentType.TEXT)
+        .expectResponseTime(lessThan(5000L))
+        .expectStatusCode(HttpStatus.SC_UNAUTHORIZED).expectBody(Matchers.equalTo("invalid key"))
+        .build();
+
 }
