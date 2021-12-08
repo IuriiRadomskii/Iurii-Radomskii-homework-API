@@ -13,7 +13,7 @@ public class BaseTest {
 
     Map<String, String> creds = new HashMap<>();
 
-    protected void getCreds() {
+    protected void setCreds() {
         creds.put("key", ApiKeysInit.getApiKey());
         creds.put("token", ApiKeysInit.getApiToken());
     }

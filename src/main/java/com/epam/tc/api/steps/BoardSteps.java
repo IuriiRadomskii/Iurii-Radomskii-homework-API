@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class BoardSteps {
+public class BoardSteps extends BaseSteps {
 
     public Response createBoard(String boardName, RequestSpecification spec, Map<String, String> creds) {
         return ServiceObject

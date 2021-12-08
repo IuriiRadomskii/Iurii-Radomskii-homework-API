@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ListSteps {
+public class ListSteps extends BaseSteps {
 
     public Response createList(String listName, Board board, RequestSpecification spec, Map<String, String> creds) {
         return ServiceObject
@@ -49,7 +49,6 @@ public class ListSteps {
             .buildRequest()
             .sendRequest(Resources.RESOURCE_ID, spec);
     }
-    //{{baseURI}}/1/lists/61abc39d0ad010379bd3fc5a/closed?key={{apiKey}}&token={{apiToken}}&value=true
 
     public Response deleteList(TrelloList trelloList, RequestSpecification spec, Map<String, String> creds) {
         return ServiceObject
@@ -62,8 +61,6 @@ public class ListSteps {
             .buildRequest()
             .sendRequest(Resources.RESOURCE_ID_RESOURCE, spec);
     }
-
-    ///1/boards/{id}/lists
 
     public void deleteAllListsFromBoard(Board board) {
         Map<String, String> creds = new HashMap<>();
@@ -85,7 +82,4 @@ public class ListSteps {
             .fromJson(response.asString().trim(), new TypeToken<List<TrelloList>>() {
             }.getType());
     }
-
-
 }
-

@@ -6,10 +6,9 @@ import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.specification.ResponseSpecification;
 import org.apache.http.HttpStatus;
-import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 
-public class ResponseSpecifications {
+public class ResponseSpecs {
 
     public static final ResponseSpecification goodResponse = new ResponseSpecBuilder()
         .expectContentType(ContentType.JSON)
