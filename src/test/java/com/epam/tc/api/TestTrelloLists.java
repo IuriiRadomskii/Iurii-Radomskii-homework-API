@@ -1,40 +1,61 @@
-/*package com.epam.tc.api;
+package com.epam.tc.api;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.epam.tc.api.entities.Board;
 import com.epam.tc.api.entities.TrelloList;
-import com.epam.tc.api.service.TrelloServiceObj;
+import com.epam.tc.api.service.ServiceObject;
+import com.epam.tc.api.specs.RequestSpecifications;
 import com.epam.tc.api.specs.ResponseSpecifications;
 import io.restassured.response.Response;
 import org.hamcrest.Matchers;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-public class TestTrelloLists {
+public class TestTrelloLists extends BaseTest {
 
     private static Board testBoard;
 
     @BeforeClass
-    public void createBoard() {
-        Response createResponse = TrelloServiceObj.createBoard("Board");
-        testBoard = TrelloServiceObj.getBoard(createResponse);
+    public void createTestBoard() {
+        Response createResponse = boardSteps.createBoard("testBoard",
+            RequestSpecifications.DEFAULT_SPEC,
+            creds);
+        testBoard = ServiceObject.jsonBoardToPojo(createResponse);
+    }
+
+    @AfterClass
+    public void deleteAllBoards() {
+        boardSteps.deleteAllBoards();
+    }
+
+    @AfterMethod
+    public void deleteAllLists() {
+        listSteps.deleteAllListsFromBoard(testBoard);
     }
 
     @Test
     public void checkListPosting() {
-        Response createResponse = TrelloServiceObj.createTrelloList("List", testBoard.getId());
-        TrelloList initList = TrelloServiceObj.getTrelloList(createResponse);
+        Response createResponse = listSteps
+            .createList("List", testBoard, RequestSpecifications.DEFAULT_SPEC, creds);
+        TrelloList initList = ServiceObject.jsonListToPojo(createResponse);
 
-        createResponse.then().assertThat().spec(ResponseSpecifications.goodResponse);
+        createResponse
+            .then()
+            .assertThat()
+            .spec(ResponseSpecifications.goodResponse);
+
         assertThat("Checking initial list name", initList.getName(), Matchers.equalTo("List"));
         assertThat("Checking lists boardID", initList.getIdBoard(), Matchers.equalTo(testBoard.getId()));
     }
 
     @Test
     public void checkListModifying() {
-        Response createResponse = TrelloServiceObj.createTrelloList("List", testBoard.getId());
-        TrelloList initList = TrelloServiceObj.getTrelloList(createResponse);
+        Response createResponse = listSteps
+            .createList("List", testBoard, RequestSpecifications.DEFAULT_SPEC, creds);
+        TrelloList initList = ServiceObject.jsonListToPojo(createResponse);
 
         Response modifyResponse = TrelloServiceObj.putTrelloListName("FOO", testBoard.getId(), initList.getId());
         TrelloList modifiedList = TrelloServiceObj.getTrelloList(modifyResponse);
@@ -57,4 +78,4 @@ public class TestTrelloLists {
         assertThat("Checking lists boardID", modifiedList.getIdBoard(), Matchers.equalTo(testBoard.getId()));
     }
 
-}*/
+}

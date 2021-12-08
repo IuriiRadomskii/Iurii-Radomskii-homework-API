@@ -6,7 +6,7 @@ import java.util.Properties;
 
 public class ApiKeysInit {
 
-    public static String getApiKey(String propertyName) {
+    private static String get(String propertyName) {
         FileInputStream inputStream;
         Properties property = new Properties();
         try {
@@ -19,4 +19,15 @@ public class ApiKeysInit {
         return "";
     }
 
+    public static String getApiKey() {
+        return get("key");
+    }
+
+    public static String getApiToken() {
+        return get("token");
+    }
+
+    public static String getBaseURI() {
+        return get("baseURI");
+    }
 }
