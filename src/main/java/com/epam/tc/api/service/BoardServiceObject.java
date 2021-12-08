@@ -19,7 +19,7 @@ public class BoardServiceObject extends AbsctractTrelloServiceObj {
         return new BoardBuilder(additionalParameters);
     }
 
-    public static class BoardBuilder extends AbstractBuilder<BoardBuilder, BoardServiceObject> {
+    public static class BoardBuilder extends AbstractBuilder<BoardBuilder, BoardServiceObject>
 
         BoardBuilder() {
         }
@@ -32,5 +32,6 @@ public class BoardServiceObject extends AbsctractTrelloServiceObj {
         public BoardServiceObject buildRequest() {
             return new BoardServiceObject(queryParams, pathParams, requestMethod);
         }
+
     }
 }

@@ -6,6 +6,7 @@ import com.epam.tc.api.specs.RequestSpecifications;
 import io.restassured.RestAssured;
 import io.restassured.http.Method;
 import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,8 +23,6 @@ public abstract class AbsctractTrelloServiceObj {
     }
 
     public abstract static class AbstractBuilder<B extends AbstractBuilder<B, T>, T extends AbsctractTrelloServiceObj> {
-
-
 
         protected Map<String, String> queryParams = new HashMap<>();
         protected Map<String, String> pathParams = new HashMap<>();
@@ -69,15 +68,14 @@ public abstract class AbsctractTrelloServiceObj {
 
     }
 
-    public Response sendRequest(String template) {
+    public Response sendRequest(String template, RequestSpecification spec) {
         return RestAssured
-            .given(RequestSpecifications.DEFAULT_SPEC).log().all()
+            .given(spec).log().all()
             .pathParams(pathParams)
             .queryParams(queryParams)
             .request(requestMethod, template)
             .prettyPeek();
     }
-
 
     public static <P> P mapResponseToPojo(Response response, Class<P> cls) {
         return response.as(cls);
