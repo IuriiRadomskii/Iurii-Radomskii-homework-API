@@ -7,7 +7,6 @@ import com.epam.tc.api.entities.Board;
 import com.epam.tc.api.entities.TrelloList;
 import com.epam.tc.api.service.ServiceObject;
 import com.epam.tc.api.specs.RequestSpecifications;
-import com.epam.tc.api.specs.ResponseSpecs;
 import io.restassured.response.Response;
 import org.hamcrest.Matchers;
 import org.testng.annotations.AfterClass;
