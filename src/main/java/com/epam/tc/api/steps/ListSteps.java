@@ -9,6 +9,7 @@ import com.epam.tc.api.specs.RequestSpecifications;
 import com.epam.tc.api.util.ApiKeysInit;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import io.qameta.allure.Step;
 import io.restassured.http.Method;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
@@ -18,6 +19,7 @@ import java.util.Map;
 
 public class ListSteps extends BaseSteps {
 
+    @Step("Create list")
     public Response createList(String listName, Board board, RequestSpecification spec, Map<String, String> creds) {
         return ServiceObject
             .builder(creds)
@@ -29,6 +31,7 @@ public class ListSteps extends BaseSteps {
             .sendRequest(Resources.RESOURCE, spec);
     }
 
+    @Step("Get list")
     public Response getList(TrelloList trelloList, RequestSpecification spec, Map<String, String> creds) {
         return ServiceObject
             .builder(creds)
@@ -39,6 +42,7 @@ public class ListSteps extends BaseSteps {
                 .sendRequest(Resources.RESOURCE_ID, spec);
     }
 
+    @Step("Put list name list")
     public Response putListName(TrelloList  trelloList, RequestSpecification spec, Map<String, String> creds) {
         return ServiceObject
             .builder(creds)
@@ -50,6 +54,7 @@ public class ListSteps extends BaseSteps {
             .sendRequest(Resources.RESOURCE_ID, spec);
     }
 
+    @Step("Delete list")
     public Response deleteList(TrelloList trelloList, RequestSpecification spec, Map<String, String> creds) {
         return ServiceObject
             .builder(creds)
@@ -62,6 +67,7 @@ public class ListSteps extends BaseSteps {
             .sendRequest(Resources.RESOURCE_ID_RESOURCE, spec);
     }
 
+    @Step("Delete all lists from board")
     public void deleteAllListsFromBoard(Board board) {
         Map<String, String> creds = new HashMap<>();
         creds.put("key", ApiKeysInit.getApiKey());

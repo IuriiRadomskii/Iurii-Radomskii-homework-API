@@ -4,18 +4,18 @@ import com.epam.tc.api.data.Resources;
 import com.epam.tc.api.entities.Board;
 import com.epam.tc.api.service.ServiceObject;
 import com.epam.tc.api.specs.RequestSpecifications;
-import com.epam.tc.api.util.ApiKeysInit;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import io.qameta.allure.Step;
 import io.restassured.http.Method;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class BoardSteps extends BaseSteps {
 
+    @Step("Create board")
     public Response createBoard(String boardName, RequestSpecification spec, Map<String, String> creds) {
         return ServiceObject
             .builder(creds)
@@ -26,6 +26,7 @@ public class BoardSteps extends BaseSteps {
             .sendRequest(Resources.RESOURCE, spec);
     }
 
+    @Step("Get board")
     public Response getBoard(Board board, RequestSpecification spec, Map<String, String> creds) {
         return ServiceObject
             .builder(creds)
@@ -36,6 +37,7 @@ public class BoardSteps extends BaseSteps {
             .sendRequest(Resources.RESOURCE_ID, spec);
     }
 
+    @Step("Put board name")
     public Response putBoardName(Board board, RequestSpecification spec, Map<String, String> creds) {
         return ServiceObject
             .builder(creds)
@@ -47,6 +49,7 @@ public class BoardSteps extends BaseSteps {
             .sendRequest(Resources.RESOURCE_ID, spec);
     }
 
+    @Step("Delete board")
     public Response deleteBoard(Board board, RequestSpecification spec, Map<String, String> creds) {
         return ServiceObject
             .builder(creds)
