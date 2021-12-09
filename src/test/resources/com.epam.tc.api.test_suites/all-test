@@ -1,3 +1,4 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
 <suite name="all-tests">
   <test name="Running all api tests">
     <classes>

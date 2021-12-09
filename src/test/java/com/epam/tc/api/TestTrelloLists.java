@@ -27,7 +27,7 @@ public class TestTrelloLists extends BaseTest {
 
     @AfterClass
     public void deleteAllBoards() {
-        boardSteps.deleteAllBoards();
+        boardSteps.deleteAllBoards(creds);
     }
 
     @AfterMethod

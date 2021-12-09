@@ -57,16 +57,12 @@ public class BoardSteps extends BaseSteps {
             .sendRequest(Resources.RESOURCE_ID, spec);
     }
 
-    public void deleteAllBoards() {
-        Map<String, String> creds = new HashMap<>();
-        creds.put("key", ApiKeysInit.getApiKey());
-        creds.put("token", ApiKeysInit.getApiToken());
-
+    public void deleteAllBoards(Map<String, String> creds) {
         Response response = ServiceObject
             .builder(creds)
                 .setMethod(Method.GET)
                 .buildRequest()
-                .sendRequestWithDefaultSpec(Resources.ALL_MEMBERS_BOARDS);
+                .sendRequest(Resources.ALL_MEMBERS_BOARDS, RequestSpecifications.DEFAULT_SPEC);
         List<Board> boards = boardsToList(response);
         boards.stream().forEach(b -> this.deleteBoard(b, RequestSpecifications.DEFAULT_SPEC, creds));
     }

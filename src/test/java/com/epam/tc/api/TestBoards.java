@@ -21,7 +21,7 @@ public class TestBoards extends BaseTest {
 
     @AfterClass
     public void deleteAllBoards() {
-        boardSteps.deleteAllBoards();
+        boardSteps.deleteAllBoards(creds);
     }
 
     @Test(dataProviderClass = TrelloDataProvider.class, dataProvider = "boardData")

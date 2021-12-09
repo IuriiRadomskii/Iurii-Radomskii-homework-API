@@ -122,7 +122,7 @@
                 </dependencies>
             </plugin><!--surefire plugin-->
 
-            <plugin>
+            <!--<plugin>
                 <groupId>org.jsonschema2pojo</groupId>
                 <artifactId>jsonschema2pojo-maven-plugin</artifactId>
                 <version>${jsonschema2pojo-maven-plugin.version}</version>
@@ -141,17 +141,8 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin><!--jsonschema2pojo plugin-->
+            </plugin>&lt;!&ndash;jsonschema2pojo plugin&ndash;&gt;-->
         </plugins>
-        <resources>
-            <resource>
-                <directory>${project.basedir}/src/main/resources</directory>
-            </resource>
-            <resource>
-                <directory>src/test/resources</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
     </build>
 
     <reporting>
