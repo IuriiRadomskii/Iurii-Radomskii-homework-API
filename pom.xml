@@ -31,7 +31,25 @@
     </properties>
 
     <profiles>
-
+        <profile>
+            <id>all-test</id>
+            <activation><activeByDefault>true</activeByDefault></activation>
+            <properties>
+                <suite.name.xml>${project.basedir}/src/test/resources/com.epam.tc.api.test_suites/all-test</suite.name.xml>
+            </properties>
+        </profile>
+        <profile>
+            <id>board-test</id>
+            <properties>
+                <suite.name.xml>${project.basedir}/src/test/resources/com.epam.tc.api.test_suites/board-test</suite.name.xml>
+            </properties>
+        </profile>
+        <profile>
+            <id>list-test</id>
+            <properties>
+                <suite.name.xml>${project.basedir}/src/test/resources/com.epam.tc.api.test_suites/list-test</suite.name.xml>
+            </properties>
+        </profile>
     </profiles>
 
     <dependencies>
