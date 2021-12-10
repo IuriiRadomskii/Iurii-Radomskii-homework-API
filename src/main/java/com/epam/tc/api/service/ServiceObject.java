@@ -37,16 +37,6 @@ public class ServiceObject {
         return new RequestBuilder(queryParams, pathParams);
     }
 
-    public Response sendRequestWithDefaultSpec(String pathTemplate) {
-        return RestAssured
-            .given(RequestSpecifications.DEFAULT_SPEC)
-            .log().all()
-            .pathParams(pathParams)
-            .queryParams(queryParams)
-            .request(requestMethod, pathTemplate)
-            .prettyPeek();
-    }
-
     public Response sendRequest(String pathTemplate, RequestSpecification spec) {
         return RestAssured
             .given(spec)
