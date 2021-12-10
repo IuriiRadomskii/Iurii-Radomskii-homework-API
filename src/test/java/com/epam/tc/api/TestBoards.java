@@ -9,15 +9,9 @@ import com.epam.tc.api.specs.ResponseSpecs;
 import io.restassured.response.Response;
 import org.hamcrest.Matchers;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 public class TestBoards extends BaseTest {
-
-    @BeforeClass
-    public void setup() {
-        setCreds();
-    }
 
     @AfterMethod
     public void deleteTestBoard() {
@@ -32,22 +26,23 @@ public class TestBoards extends BaseTest {
     @Test(dataProviderClass = TrelloDataProvider.class, dataProvider = "boardData")
     public void checkBoardPosting(Board board) {
         Response createResponse = boardSteps.createBoard(board.getName(), DEFAULT_SPEC, creds);
+        boardSteps.checkResponse(createResponse, ResponseSpecs.GOOD_RESPONSE);
         Board initBoard = boardSteps.boardToPojo(createResponse);
-        onSiteBoardID = initBoard.getId();
         assertThat("Checking initial board name", initBoard.getName(), Matchers.equalTo(board.getName()));
+        onSiteBoardID = initBoard.getId();
     }
 
     @Test(dataProviderClass = TrelloDataProvider.class, dataProvider = "boardData")
     public void checkBoardUpdating(Board newBoard) {
         Response createResponse = boardSteps.createBoard("initBoardName", DEFAULT_SPEC, creds);
         Board initBoard = boardSteps.boardToPojo(createResponse);
-
         initBoard.setName(newBoard.getName());
 
         Response modifyResponse = boardSteps.putBoardName(initBoard, DEFAULT_SPEC, creds);
+        boardSteps.checkResponse(modifyResponse, ResponseSpecs.GOOD_RESPONSE);
         Board board = boardSteps.boardToPojo(modifyResponse);
-        onSiteBoardID = board.getId();
         assertThat("Checking put board name", board.getName(), Matchers.equalTo(newBoard.getName()));
+        onSiteBoardID = board.getId();
     }
 
     @Test(dataProviderClass = TrelloDataProvider.class, dataProvider = "boardData")
@@ -55,6 +50,6 @@ public class TestBoards extends BaseTest {
         Response createResponse = boardSteps.createBoard(board.getName(), DEFAULT_SPEC, creds);
         Board initBoard = boardSteps.boardToPojo(createResponse);
         Response deleteResponse = boardSteps.deleteBoard(initBoard, DEFAULT_SPEC, creds);
-        boardSteps.checkResponse(deleteResponse, ResponseSpecs.goodDeleteResponse);
+        boardSteps.checkResponse(deleteResponse, ResponseSpecs.GOOD_DELETE_RESPONSE);
     }
 }

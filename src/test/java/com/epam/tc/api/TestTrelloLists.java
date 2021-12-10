@@ -1,6 +1,7 @@
 package com.epam.tc.api;
 
 import static com.epam.tc.api.specs.RequestSpecifications.DEFAULT_SPEC;
+import static com.epam.tc.api.specs.ResponseSpecs.GOOD_RESPONSE;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.epam.tc.api.data.TrelloDataProvider;
@@ -20,9 +21,9 @@ public class TestTrelloLists extends BaseTest {
 
     @BeforeClass
     public void createTestBoard() {
-        setCreds();
         testBoard = ServiceObject
-            .jsonBoardToPojo(boardSteps.createBoard("testBoard", RequestSpecifications.DEFAULT_SPEC, creds));
+            .jsonBoardToPojo(boardSteps
+                .createBoard("testBoard", RequestSpecifications.DEFAULT_SPEC, creds));
     }
 
     @AfterMethod
@@ -39,10 +40,13 @@ public class TestTrelloLists extends BaseTest {
     public void checkListPosting(TrelloList trelloList) {
         Response createResponse = listSteps
             .createList(trelloList.getName(), testBoard, RequestSpecifications.DEFAULT_SPEC, creds);
+        listSteps.checkResponse(createResponse, GOOD_RESPONSE);
+
         TrelloList initList = ServiceObject.jsonListToPojo(createResponse);
         assertThat("Checking initial list name", initList.getName(), Matchers.equalTo(trelloList.getName()));
         assertThat("Checking lists boardID", initList.getIdBoard(), Matchers.equalTo(testBoard.getId()));
         onSiteListID = initList.getId();
+
     }
 
     @Test(dataProviderClass = TrelloDataProvider.class, dataProvider = "listData")
@@ -53,7 +57,9 @@ public class TestTrelloLists extends BaseTest {
 
         initList.setName("newName");
         Response modifyResponse = listSteps.putListName(initList, RequestSpecifications.DEFAULT_SPEC, creds);
+        listSteps.checkResponse(modifyResponse, GOOD_RESPONSE);
         TrelloList modifiedList = ServiceObject.jsonListToPojo(modifyResponse);
+
         assertThat("Checking put list name", modifiedList.getName(), Matchers.equalTo("newName"));
         assertThat("Checking lists boardID", modifiedList.getIdBoard(), Matchers.equalTo(testBoard.getId()));
         onSiteListID = initList.getId();
@@ -64,11 +70,14 @@ public class TestTrelloLists extends BaseTest {
         Response createResponse = listSteps
             .createList(trelloList.getName(), testBoard, RequestSpecifications.DEFAULT_SPEC, creds);
         TrelloList initList = ServiceObject.jsonListToPojo(createResponse);
+
         Response archiveResponse = listSteps.deleteList(initList, RequestSpecifications.DEFAULT_SPEC, creds);
-        TrelloList closedList = ServiceObject.jsonListToPojo(archiveResponse);
-        assertThat("Checking put list name", closedList.getName(), Matchers.equalTo(trelloList.getName()));
-        assertThat("Checking lists boardID", closedList.getIdBoard(), Matchers.equalTo(testBoard.getId()));
-        assertThat("Checking lists status", closedList.getClosed(), Matchers.equalTo(true));
+        listSteps.checkResponse(archiveResponse, GOOD_RESPONSE);
+
+        TrelloList archivedList = ServiceObject.jsonListToPojo(archiveResponse);
+        assertThat("Checking put list name", archivedList.getName(), Matchers.equalTo(trelloList.getName()));
+        assertThat("Checking lists boardID", archivedList.getIdBoard(), Matchers.equalTo(testBoard.getId()));
+        assertThat("Checking lists status", archivedList.getClosed(), Matchers.equalTo(true));
         onSiteListID = initList.getId();
     }
 }

@@ -10,6 +10,7 @@ import io.restassured.RestAssured;
 import io.restassured.http.Method;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import io.restassured.specification.ResponseSpecification;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,8 +40,7 @@ public class ServiceObject {
 
     public Response sendRequest(String pathTemplate, RequestSpecification spec) {
         return RestAssured
-            .given(spec)
-            .log().all()
+            .given(spec).log().body()
             .pathParams(pathParams)
             .queryParams(queryParams)
             .request(requestMethod, pathTemplate)

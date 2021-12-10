@@ -6,6 +6,9 @@ import com.epam.tc.api.util.ApiKeysInit;
 import java.util.HashMap;
 import java.util.Map;
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeSuite;
 
 public class BaseTest {
 
@@ -16,11 +19,10 @@ public class BaseTest {
     protected String onSiteBoardID;
     protected String onSiteListID;
 
-    @AfterClass
-    public void deleteAllBoards() {
-        boardSteps.deleteAllBoards(creds);
+    @BeforeClass
+    public void setup() {
+        setCreds();
     }
-
 
     protected void setCreds() {
         creds.put("key", ApiKeysInit.getApiKey());
