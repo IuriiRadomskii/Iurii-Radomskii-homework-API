@@ -5,15 +5,12 @@ import com.epam.tc.api.data.Resources;
 import com.epam.tc.api.entities.Board;
 import com.epam.tc.api.entities.TrelloList;
 import com.epam.tc.api.service.ServiceObject;
-import com.epam.tc.api.specs.RequestSpecifications;
-import com.epam.tc.api.util.ApiKeysInit;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import io.qameta.allure.Step;
 import io.restassured.http.Method;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

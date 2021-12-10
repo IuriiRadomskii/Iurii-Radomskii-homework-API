@@ -3,14 +3,12 @@ package com.epam.tc.api.service;
 import com.epam.tc.api.data.ParametersName;
 import com.epam.tc.api.entities.Board;
 import com.epam.tc.api.entities.TrelloList;
-import com.epam.tc.api.specs.RequestSpecifications;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import io.restassured.RestAssured;
 import io.restassured.http.Method;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import io.restassured.specification.ResponseSpecification;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,7 +38,7 @@ public class ServiceObject {
 
     public Response sendRequest(String pathTemplate, RequestSpecification spec) {
         return RestAssured
-            .given(spec).log().body()
+            .given(spec).log().method()
             .pathParams(pathParams)
             .queryParams(queryParams)
             .request(requestMethod, pathTemplate)
