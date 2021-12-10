@@ -1,5 +1,6 @@
 package com.epam.tc.api;
 
+import static com.epam.tc.api.specs.RequestSpecifications.DEFAULT_SPEC;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.epam.tc.api.data.TrelloDataProvider;
@@ -9,7 +10,6 @@ import com.epam.tc.api.service.ServiceObject;
 import com.epam.tc.api.specs.RequestSpecifications;
 import io.restassured.response.Response;
 import org.hamcrest.Matchers;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -25,14 +25,14 @@ public class TestTrelloLists extends BaseTest {
             .jsonBoardToPojo(boardSteps.createBoard("testBoard", RequestSpecifications.DEFAULT_SPEC, creds));
     }
 
-    @AfterClass
-    public void deleteAllBoards() {
-        boardSteps.deleteAllBoards(creds);
-    }
-
     @AfterMethod
-    public void deleteAllLists() {
-        listSteps.deleteAllListsFromBoard(testBoard);
+    public void deleteTestList() {
+        if (onSiteListID != null) {
+            TrelloList trelloList = new TrelloList();
+            trelloList.setId(onSiteListID);
+            listSteps.deleteList(trelloList, DEFAULT_SPEC, creds);
+            onSiteListID = null;
+        }
     }
 
     @Test(dataProviderClass = TrelloDataProvider.class, dataProvider = "listData")
@@ -42,6 +42,7 @@ public class TestTrelloLists extends BaseTest {
         TrelloList initList = ServiceObject.jsonListToPojo(createResponse);
         assertThat("Checking initial list name", initList.getName(), Matchers.equalTo(trelloList.getName()));
         assertThat("Checking lists boardID", initList.getIdBoard(), Matchers.equalTo(testBoard.getId()));
+        onSiteListID = initList.getId();
     }
 
     @Test(dataProviderClass = TrelloDataProvider.class, dataProvider = "listData")
@@ -53,9 +54,9 @@ public class TestTrelloLists extends BaseTest {
         initList.setName("newName");
         Response modifyResponse = listSteps.putListName(initList, RequestSpecifications.DEFAULT_SPEC, creds);
         TrelloList modifiedList = ServiceObject.jsonListToPojo(modifyResponse);
-
         assertThat("Checking put list name", modifiedList.getName(), Matchers.equalTo("newName"));
         assertThat("Checking lists boardID", modifiedList.getIdBoard(), Matchers.equalTo(testBoard.getId()));
+        onSiteListID = initList.getId();
     }
 
     @Test(dataProviderClass = TrelloDataProvider.class, dataProvider = "listData")
@@ -68,5 +69,6 @@ public class TestTrelloLists extends BaseTest {
         assertThat("Checking put list name", closedList.getName(), Matchers.equalTo(trelloList.getName()));
         assertThat("Checking lists boardID", closedList.getIdBoard(), Matchers.equalTo(testBoard.getId()));
         assertThat("Checking lists status", closedList.getClosed(), Matchers.equalTo(true));
+        onSiteListID = initList.getId();
     }
 }

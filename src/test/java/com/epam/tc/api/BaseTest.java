@@ -14,7 +14,7 @@ public class BaseTest {
     Map<String, String> creds = new HashMap<>();
 
     protected String onSiteBoardID;
-    protected String testListID;
+    protected String onSiteListID;
 
     @AfterClass
     public void deleteAllBoards() {

@@ -67,22 +67,6 @@ public class ListSteps extends BaseSteps {
             .sendRequest(Resources.RESOURCE_ID_RESOURCE, spec);
     }
 
-    @Step("Delete all lists from board")
-    public void deleteAllListsFromBoard(Board board) {
-        Map<String, String> creds = new HashMap<>();
-        creds.put("key", ApiKeysInit.getApiKey());
-        creds.put("token", ApiKeysInit.getApiToken());
-        Response response = ServiceObject
-            .builder(creds)
-            .setMethod(Method.GET)
-            .addPathParam("resource", Resources.BOARD_RESOURCE)
-            .addPathParam("ID", board.getId())
-            .addPathParam("resource_1", Resources.LIST_RESOURCE)
-            .buildRequest()
-            .sendRequest(Resources.RESOURCE_ID_RESOURCE, RequestSpecifications.DEFAULT_SPEC);
-        listsToList(response).stream().forEach(l -> this.deleteList(l, RequestSpecifications.DEFAULT_SPEC, creds));
-    }
-
     public List<TrelloList> listsToList(Response response) {
         return new Gson()
             .fromJson(response.asString().trim(), new TypeToken<List<TrelloList>>() {
