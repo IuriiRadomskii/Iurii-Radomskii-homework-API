@@ -58,16 +58,16 @@
             <version>${testng.version}</version>
             <scope>test</scope>
         </dependency> <!-- testng -->
-        <dependency>
+        <!--<dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>${slf4j.version}</version>
-        </dependency> <!-- slf4j -->
+        </dependency> &lt;!&ndash; slf4j &ndash;&gt;
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
             <version>${slf4j.version}</version>
-        </dependency> <!-- slf4j -->
+        </dependency> &lt;!&ndash; slf4j &ndash;&gt;-->
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-testng</artifactId>
