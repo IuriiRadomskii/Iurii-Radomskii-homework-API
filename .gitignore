@@ -5,3 +5,4 @@ target
 etc.
 .allure
 commands
+src/main/java/com.epam.tc.api/draft

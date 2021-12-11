@@ -14,7 +14,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <testng.version>7.4.0</testng.version>
-        <assertj.version>3.20.2</assertj.version>
 
         <slf4j.version>2.0.0-alpha5</slf4j.version>
         <maven-surefire.version>3.0.0-M5</maven-surefire.version>
@@ -26,12 +25,28 @@
         <gson.version>2.8.8</gson.version>
 
         <rest-assured.version>4.4.0</rest-assured.version>
-        <hamcrest.version>2.2</hamcrest.version>
-        <jsonschema2pojo-maven-plugin.version>1.0.2</jsonschema2pojo-maven-plugin.version>
     </properties>
 
     <profiles>
-
+        <profile>
+            <id>all-test</id>
+            <activation><activeByDefault>true</activeByDefault></activation>
+            <properties>
+                <suite.name.xml>${project.basedir}/src/test/resources/com.epam.tc.api.test_suites/all-test.xml</suite.name.xml>
+            </properties>
+        </profile>
+        <profile>
+            <id>board-test</id>
+            <properties>
+                <suite.name.xml>${project.basedir}/src/test/resources/com.epam.tc.api.test_suites/board-test.xml</suite.name.xml>
+            </properties>
+        </profile>
+        <profile>
+            <id>list-test</id>
+            <properties>
+                <suite.name.xml>${project.basedir}/src/test/resources/com.epam.tc.api.test_suites/list-test.xml</suite.name.xml>
+            </properties>
+        </profile>
     </profiles>
 
     <dependencies>
@@ -42,19 +57,8 @@
             <scope>test</scope>
         </dependency> <!-- testng -->
         <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
-            <version>${assertj.version}</version>
-            <scope>test</scope>
-        </dependency> <!-- assertj -->
-        <dependency>
             <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency> <!-- slf4j -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
+            <artifactId>slf4j-nop</artifactId>
             <version>${slf4j.version}</version>
         </dependency> <!-- slf4j -->
         <dependency>
@@ -67,11 +71,6 @@
             <artifactId>rest-assured</artifactId>
             <version>${rest-assured.version}</version>
         </dependency><!--rest-assured-->
-        <dependency>
-            <groupId>org.hamcrest</groupId>
-            <artifactId>hamcrest-core</artifactId>
-            <version>${hamcrest.version}</version>
-        </dependency><!--hamcrest-->
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
@@ -103,37 +102,7 @@
                     </dependency>
                 </dependencies>
             </plugin><!--surefire plugin-->
-
-            <plugin>
-                <groupId>org.jsonschema2pojo</groupId>
-                <artifactId>jsonschema2pojo-maven-plugin</artifactId>
-                <version>${jsonschema2pojo-maven-plugin.version}</version>
-                <configuration>
-                    <sourceDirectory>${basedir}/src/main/resources/com.epam.tc.api.schemes</sourceDirectory>
-                    <outputDirectory>${basedir}/src/main/java</outputDirectory>
-                    <targetPackage>entities</targetPackage>
-                    <addCompileSourceRoot>true</addCompileSourceRoot>
-                    <sourceType>json</sourceType>
-                    <annotationStyle>gson</annotationStyle>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin><!--jsonschema2pojo plugin-->
         </plugins>
-        <resources>
-            <resource>
-                <directory>${project.basedir}/src/main/resources</directory>
-            </resource>
-            <resource>
-                <directory>src/test/resources</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
     </build>
 
     <reporting>
@@ -149,6 +118,5 @@
             </plugin>
         </plugins>
     </reporting>
-
 </project>
 

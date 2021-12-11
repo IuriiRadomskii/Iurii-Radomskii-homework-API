@@ -1,4 +1,3 @@
-
 package com.epam.tc.api.entities;
 
 import com.google.gson.annotations.Expose;
@@ -126,46 +125,46 @@ public class Board {
           .append(Integer.toHexString(System.identityHashCode(this))).append('[');
         sb.append("id");
         sb.append('=');
-        sb.append(((this.id == null)?"<null>":this.id));
+        sb.append(((this.id == null) ? "<null>" : this.id));
         sb.append(',');
         sb.append("name");
         sb.append('=');
-        sb.append(((this.name == null)?"<null>":this.name));
+        sb.append(((this.name == null) ? "<null>" : this.name));
         sb.append(',');
         sb.append("desc");
         sb.append('=');
-        sb.append(((this.desc == null)?"<null>":this.desc));
+        sb.append(((this.desc == null) ? "<null>" : this.desc));
         sb.append(',');
         sb.append("descData");
         sb.append('=');
-        sb.append(((this.descData == null)?"<null>":this.descData));
+        sb.append(((this.descData == null) ? "<null>" : this.descData));
         sb.append(',');
         sb.append("closed");
         sb.append('=');
-        sb.append(((this.closed == null)?"<null>":this.closed));
+        sb.append(((this.closed == null) ? "<null>" : this.closed));
         sb.append(',');
         sb.append("idOrganization");
         sb.append('=');
-        sb.append(((this.idOrganization == null)?"<null>":this.idOrganization));
+        sb.append(((this.idOrganization == null) ? "<null>" : this.idOrganization));
         sb.append(',');
         sb.append("idEnterprise");
         sb.append('=');
-        sb.append(((this.idEnterprise == null)?"<null>":this.idEnterprise));
+        sb.append(((this.idEnterprise == null) ? "<null>" : this.idEnterprise));
         sb.append(',');
         sb.append("pinned");
         sb.append('=');
-        sb.append(((this.pinned == null)?"<null>":this.pinned));
+        sb.append(((this.pinned == null) ? "<null>" : this.pinned));
         sb.append(',');
         sb.append("url");
         sb.append('=');
-        sb.append(((this.url == null)?"<null>":this.url));
+        sb.append(((this.url == null) ? "<null>" : this.url));
         sb.append(',');
         sb.append("shortUrl");
         sb.append('=');
-        sb.append(((this.shortUrl == null)?"<null>":this.shortUrl));
+        sb.append(((this.shortUrl == null) ? "<null>" : this.shortUrl));
         sb.append(',');
-        if (sb.charAt((sb.length()- 1)) == ',') {
-            sb.setCharAt((sb.length()- 1), ']');
+        if (sb.charAt((sb.length() - 1)) == ',') {
+            sb.setCharAt((sb.length() - 1), ']');
         } else {
             sb.append(']');
         }
@@ -176,16 +175,16 @@ public class Board {
     @Override
     public int hashCode() {
         int result = 1;
-        result = ((result * 31) + ((this.descData == null)? 0 :this.descData.hashCode()));
-        result = ((result * 31) + ((this.pinned == null)? 0 :this.pinned.hashCode()));
-        result = ((result * 31) + ((this.shortUrl == null)? 0 :this.shortUrl.hashCode()));
-        result = ((result * 31) + ((this.idEnterprise == null)? 0 :this.idEnterprise.hashCode()));
-        result = ((result * 31) + ((this.name == null)? 0 :this.name.hashCode()));
-        result = ((result * 31) + ((this.idOrganization == null)? 0 :this.idOrganization.hashCode()));
-        result = ((result * 31) + ((this.closed == null)? 0 :this.closed.hashCode()));
-        result = ((result * 31) + ((this.id == null)? 0 :this.id.hashCode()));
-        result = ((result * 31) + ((this.url == null)? 0 :this.url.hashCode()));
-        result = ((result * 31) + ((this.desc == null)? 0 :this.desc.hashCode()));
+        result = ((result * 31) + ((this.descData == null) ? 0 : this.descData.hashCode()));
+        result = ((result * 31) + ((this.pinned == null) ? 0 : this.pinned.hashCode()));
+        result = ((result * 31) + ((this.shortUrl == null) ? 0 : this.shortUrl.hashCode()));
+        result = ((result * 31) + ((this.idEnterprise == null) ? 0 : this.idEnterprise.hashCode()));
+        result = ((result * 31) + ((this.name == null) ? 0 : this.name.hashCode()));
+        result = ((result * 31) + ((this.idOrganization == null) ? 0 : this.idOrganization.hashCode()));
+        result = ((result * 31) + ((this.closed == null) ? 0 : this.closed.hashCode()));
+        result = ((result * 31) + ((this.id == null) ? 0 : this.id.hashCode()));
+        result = ((result * 31) + ((this.url == null) ? 0 : this.url.hashCode()));
+        result = ((result * 31) + ((this.desc == null) ? 0 : this.desc.hashCode()));
         return result;
     }
 
@@ -210,5 +209,4 @@ public class Board {
             && (Objects.equals(this.url, rhs.url)))
             && (Objects.equals(this.desc, rhs.desc)));
     }
-
 }
