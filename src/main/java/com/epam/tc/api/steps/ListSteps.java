@@ -5,13 +5,10 @@ import com.epam.tc.api.data.Resources;
 import com.epam.tc.api.entities.Board;
 import com.epam.tc.api.entities.TrelloList;
 import com.epam.tc.api.service.ServiceObject;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import io.qameta.allure.Step;
 import io.restassured.http.Method;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import java.util.List;
 import java.util.Map;
 
 public class ListSteps extends BaseSteps {
@@ -28,18 +25,7 @@ public class ListSteps extends BaseSteps {
             .sendRequest(Resources.RESOURCE, spec);
     }
 
-    @Step("Get list")
-    public Response getList(TrelloList trelloList, RequestSpecification spec, Map<String, String> creds) {
-        return ServiceObject
-            .builder(creds)
-                .setMethod(Method.GET)
-                .addPathParam("ID", trelloList.getId())
-                .addPathParam("resource", Resources.LIST_RESOURCE)
-                .buildRequest()
-                .sendRequest(Resources.RESOURCE_ID, spec);
-    }
-
-    @Step("Put list name list")
+    @Step("Put list name")
     public Response putListName(TrelloList  trelloList, RequestSpecification spec, Map<String, String> creds) {
         return ServiceObject
             .builder(creds)
@@ -62,11 +48,5 @@ public class ListSteps extends BaseSteps {
             .addPathParam("resource_1", Resources.CLOSED)
             .buildRequest()
             .sendRequest(Resources.RESOURCE_ID_RESOURCE, spec);
-    }
-
-    public List<TrelloList> listsToList(Response response) {
-        return new Gson()
-            .fromJson(response.asString().trim(), new TypeToken<List<TrelloList>>() {
-            }.getType());
     }
 }

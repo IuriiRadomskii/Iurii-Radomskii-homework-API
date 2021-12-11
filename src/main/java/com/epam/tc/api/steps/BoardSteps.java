@@ -26,17 +26,6 @@ public class BoardSteps extends BaseSteps {
             .sendRequest(Resources.RESOURCE, spec);
     }
 
-    @Step("Get board")
-    public Response getBoard(Board board, RequestSpecification spec, Map<String, String> creds) {
-        return ServiceObject
-            .builder(creds)
-            .setMethod(Method.GET)
-            .addPathParam("resource", Resources.BOARD_RESOURCE)
-            .addPathParam("ID", board.getId())
-            .buildRequest()
-            .sendRequest(Resources.RESOURCE_ID, spec);
-    }
-
     @Step("Put board name")
     public Response putBoardName(Board board, RequestSpecification spec, Map<String, String> creds) {
         return ServiceObject
@@ -58,16 +47,6 @@ public class BoardSteps extends BaseSteps {
             .addPathParam("ID", board.getId())
             .buildRequest()
             .sendRequest(Resources.RESOURCE_ID, spec);
-    }
-
-    public void deleteAllBoards(Map<String, String> creds) {
-        Response response = ServiceObject
-            .builder(creds)
-                .setMethod(Method.GET)
-                .buildRequest()
-                .sendRequest(Resources.ALL_MEMBERS_BOARDS, RequestSpecifications.DEFAULT_SPEC);
-        List<Board> boards = boardsToList(response);
-        boards.stream().forEach(b -> this.deleteBoard(b, RequestSpecifications.DEFAULT_SPEC, creds));
     }
 
     public Board boardToPojo(Response response) {

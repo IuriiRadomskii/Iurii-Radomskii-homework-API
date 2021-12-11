@@ -9,12 +9,16 @@ import com.epam.tc.api.entities.Board;
 import com.epam.tc.api.entities.TrelloList;
 import com.epam.tc.api.service.ServiceObject;
 import com.epam.tc.api.specs.RequestSpecifications;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import io.restassured.response.Response;
 import org.hamcrest.Matchers;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+@Feature("List")
 public class TestTrelloLists extends BaseTest {
 
     private static Board testBoard;
@@ -24,6 +28,11 @@ public class TestTrelloLists extends BaseTest {
         testBoard = ServiceObject
             .jsonBoardToPojo(boardSteps
                 .createBoard("testBoard", RequestSpecifications.DEFAULT_SPEC, creds));
+    }
+
+    @AfterClass
+    public void deleteTestBoard() {
+        boardSteps.deleteBoard(testBoard, RequestSpecifications.DEFAULT_SPEC, creds);
     }
 
     @AfterMethod
@@ -36,6 +45,7 @@ public class TestTrelloLists extends BaseTest {
         }
     }
 
+    @Story("POST")
     @Test(dataProviderClass = TrelloDataProvider.class, dataProvider = "listData")
     public void checkListPosting(TrelloList trelloList) {
         Response createResponse = listSteps
@@ -46,9 +56,9 @@ public class TestTrelloLists extends BaseTest {
         assertThat("Checking initial list name", initList.getName(), Matchers.equalTo(trelloList.getName()));
         assertThat("Checking lists boardID", initList.getIdBoard(), Matchers.equalTo(testBoard.getId()));
         onSiteListID = initList.getId();
-
     }
 
+    @Story("PUT")
     @Test(dataProviderClass = TrelloDataProvider.class, dataProvider = "listData")
     public void checkListModifying(TrelloList trelloList) {
         Response createResponse = listSteps
@@ -65,6 +75,7 @@ public class TestTrelloLists extends BaseTest {
         onSiteListID = initList.getId();
     }
 
+    @Story("DELETE")
     @Test(dataProviderClass = TrelloDataProvider.class, dataProvider = "listData")
     public void checkListArchiving(TrelloList trelloList) {
         Response createResponse = listSteps
@@ -78,6 +89,5 @@ public class TestTrelloLists extends BaseTest {
         assertThat("Checking put list name", archivedList.getName(), Matchers.equalTo(trelloList.getName()));
         assertThat("Checking lists boardID", archivedList.getIdBoard(), Matchers.equalTo(testBoard.getId()));
         assertThat("Checking lists status", archivedList.getClosed(), Matchers.equalTo(true));
-        onSiteListID = initList.getId();
     }
 }

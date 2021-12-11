@@ -5,10 +5,7 @@ import com.epam.tc.api.steps.ListSteps;
 import com.epam.tc.api.util.ApiKeysInit;
 import java.util.HashMap;
 import java.util.Map;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeSuite;
 
 public class BaseTest {
 
@@ -23,6 +20,11 @@ public class BaseTest {
     public void setup() {
         setCreds();
     }
+
+    /*@AfterClass
+    public void tearDown() {
+        boardSteps.deleteAllBoards(creds);
+    }*/
 
     protected void setCreds() {
         creds.put("key", ApiKeysInit.getApiKey());
