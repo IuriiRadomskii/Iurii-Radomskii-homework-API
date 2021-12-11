@@ -20,17 +20,4 @@ public class ResponseSpecs {
         .expectBody("_value", Matchers.nullValue())
         .addResponseSpecification(GOOD_RESPONSE)
         .build();
-
-    public static final ResponseSpecification BAD_RESPONSE = new ResponseSpecBuilder()
-        .expectContentType(ContentType.TEXT)
-        .expectResponseTime(lessThan(5000L))
-        .expectStatusCode(HttpStatus.SC_BAD_REQUEST)
-        .build();
-
-    public static final ResponseSpecification INVALID_KEY_RESPONSE = new ResponseSpecBuilder()
-        .expectContentType(ContentType.TEXT)
-        .expectResponseTime(lessThan(5000L))
-        .expectStatusCode(HttpStatus.SC_UNAUTHORIZED).expectBody(Matchers.equalTo("invalid key"))
-        .build();
-
 }

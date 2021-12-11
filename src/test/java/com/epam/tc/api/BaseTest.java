@@ -21,14 +21,8 @@ public class BaseTest {
         setCreds();
     }
 
-    /*@AfterClass
-    public void tearDown() {
-        boardSteps.deleteAllBoards(creds);
-    }*/
-
     protected void setCreds() {
         creds.put("key", ApiKeysInit.getApiKey());
         creds.put("token", ApiKeysInit.getApiToken());
     }
-
 }

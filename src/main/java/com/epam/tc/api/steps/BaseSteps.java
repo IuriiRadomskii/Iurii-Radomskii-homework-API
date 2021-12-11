@@ -10,5 +10,4 @@ public class BaseSteps {
     public void checkResponse(Response response, ResponseSpecification spec) {
         response.then().spec(spec);
     }
-
 }

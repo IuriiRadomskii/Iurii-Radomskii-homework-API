@@ -61,7 +61,6 @@ public class ServiceObject {
 
         protected Map<String, String> queryParams = new HashMap<>();
         protected Map<String, String> pathParams = new HashMap<>();
-
         protected Method requestMethod;
 
         public RequestBuilder() {

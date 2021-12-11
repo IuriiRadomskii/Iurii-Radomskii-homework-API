@@ -3,14 +3,12 @@ package com.epam.tc.api.steps;
 import com.epam.tc.api.data.Resources;
 import com.epam.tc.api.entities.Board;
 import com.epam.tc.api.service.ServiceObject;
-import com.epam.tc.api.specs.RequestSpecifications;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import io.qameta.allure.Step;
 import io.restassured.http.Method;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import java.util.List;
 import java.util.Map;
 
 public class BoardSteps extends BaseSteps {
@@ -52,12 +50,6 @@ public class BoardSteps extends BaseSteps {
     public Board boardToPojo(Response response) {
         return new Gson()
             .fromJson(response.asString().trim(), new TypeToken<Board>() {
-            }.getType());
-    }
-
-    public List<Board> boardsToList(Response response) {
-        return new Gson()
-            .fromJson(response.asString().trim(), new TypeToken<List<Board>>() {
             }.getType());
     }
 }

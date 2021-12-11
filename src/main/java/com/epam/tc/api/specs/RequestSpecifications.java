@@ -15,5 +15,4 @@ public class RequestSpecifications {
             .setBaseUri(BASE_URI)
             .addHeader("Content-Type", "application/json; charset=utf-8")
             .build();
-
 }

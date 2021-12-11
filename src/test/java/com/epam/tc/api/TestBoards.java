@@ -7,13 +7,11 @@ import com.epam.tc.api.data.TrelloDataProvider;
 import com.epam.tc.api.entities.Board;
 import com.epam.tc.api.specs.ResponseSpecs;
 import io.qameta.allure.Feature;
-import io.qameta.allure.Story;
 import io.restassured.response.Response;
 import org.hamcrest.Matchers;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
-@Feature("Board")
 public class TestBoards extends BaseTest {
 
     @AfterMethod
@@ -26,7 +24,6 @@ public class TestBoards extends BaseTest {
         }
     }
 
-    @Story("POST")
     @Test(dataProviderClass = TrelloDataProvider.class, dataProvider = "boardData")
     public void checkBoardPosting(Board board) {
         Response createResponse = boardSteps.createBoard(board.getName(), DEFAULT_SPEC, creds);
@@ -36,7 +33,6 @@ public class TestBoards extends BaseTest {
         onSiteBoardID = initBoard.getId();
     }
 
-    @Story("PUT")
     @Test(dataProviderClass = TrelloDataProvider.class, dataProvider = "boardData")
     public void checkBoardUpdating(Board newBoard) {
         Response createResponse = boardSteps.createBoard("initBoardName", DEFAULT_SPEC, creds);
@@ -50,7 +46,6 @@ public class TestBoards extends BaseTest {
         onSiteBoardID = board.getId();
     }
 
-    @Story("DELETE")
     @Test(dataProviderClass = TrelloDataProvider.class, dataProvider = "boardData")
     public void checkBoardDeleting(Board board) {
         Response createResponse = boardSteps.createBoard(board.getName(), DEFAULT_SPEC, creds);
