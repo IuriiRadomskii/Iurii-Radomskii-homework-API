@@ -1,4 +1,3 @@
-
 package com.epam.tc.api.entities;
 
 import com.google.gson.annotations.Expose;
@@ -70,26 +69,26 @@ public class TrelloList {
           .append(Integer.toHexString(System.identityHashCode(this))).append('[');
         sb.append("id");
         sb.append('=');
-        sb.append(((this.id == null)?"<null>":this.id));
+        sb.append(((this.id == null) ? "<null>" : this.id));
         sb.append(',');
         sb.append("name");
         sb.append('=');
-        sb.append(((this.name == null)?"<null>":this.name));
+        sb.append(((this.name == null) ? "<null>" : this.name));
         sb.append(',');
         sb.append("closed");
         sb.append('=');
-        sb.append(((this.closed == null)?"<null>":this.closed));
+        sb.append(((this.closed == null) ? "<null>" : this.closed));
         sb.append(',');
         sb.append("pos");
         sb.append('=');
-        sb.append(((this.pos == null)?"<null>":this.pos));
+        sb.append(((this.pos == null) ? "<null>" : this.pos));
         sb.append(',');
         sb.append("idBoard");
         sb.append('=');
-        sb.append(((this.idBoard == null)?"<null>":this.idBoard));
+        sb.append(((this.idBoard == null) ? "<null>" : this.idBoard));
         sb.append(',');
-        if (sb.charAt((sb.length()- 1)) == ',') {
-            sb.setCharAt((sb.length()- 1), ']');
+        if (sb.charAt((sb.length() - 1)) == ',') {
+            sb.setCharAt((sb.length() - 1), ']');
         } else {
             sb.append(']');
         }
@@ -100,11 +99,11 @@ public class TrelloList {
     @Override
     public int hashCode() {
         int result = 1;
-        result = ((result* 31)+((this.name == null)? 0 :this.name.hashCode()));
-        result = ((result* 31)+((this.closed == null)? 0 :this.closed.hashCode()));
-        result = ((result* 31)+((this.id == null)? 0 :this.id.hashCode()));
-        result = ((result* 31)+((this.idBoard == null)? 0 :this.idBoard.hashCode()));
-        result = ((result* 31)+((this.pos == null)? 0 :this.pos.hashCode()));
+        result = ((result * 31) + ((this.name == null) ? 0 : this.name.hashCode()));
+        result = ((result * 31) + ((this.closed == null) ? 0 : this.closed.hashCode()));
+        result = ((result * 31) + ((this.id == null) ? 0 : this.id.hashCode()));
+        result = ((result * 31) + ((this.idBoard == null) ? 0 : this.idBoard.hashCode()));
+        result = ((result * 31) + ((this.pos == null) ? 0 : this.pos.hashCode()));
         return result;
     }
 
@@ -118,11 +117,10 @@ public class TrelloList {
             return false;
         }
         TrelloList rhs = ((TrelloList) other);
-        return ((((((this.name == rhs.name)||((this.name!= null)&&this.name.equals(rhs.name)))
-            &&((this.closed == rhs.closed)||((this.closed!= null)&&this.closed.equals(rhs.closed))))
-            &&((this.id == rhs.id)||((this.id!= null)&&this.id.equals(rhs.id))))
-            &&((this.idBoard == rhs.idBoard)||((this.idBoard!= null)&&this.idBoard.equals(rhs.idBoard))))
-            &&((this.pos == rhs.pos)||((this.pos!= null)&&this.pos.equals(rhs.pos))));
+        return ((((((this.name == rhs.name) || ((this.name != null) && this.name.equals(rhs.name)))
+            && ((this.closed == rhs.closed) || ((this.closed != null) && this.closed.equals(rhs.closed))))
+            && ((this.id == rhs.id) || ((this.id != null) && this.id.equals(rhs.id))))
+            && ((this.idBoard == rhs.idBoard) || ((this.idBoard != null) && this.idBoard.equals(rhs.idBoard))))
+            && ((this.pos == rhs.pos) || ((this.pos != null) && this.pos.equals(rhs.pos))));
     }
-
 }

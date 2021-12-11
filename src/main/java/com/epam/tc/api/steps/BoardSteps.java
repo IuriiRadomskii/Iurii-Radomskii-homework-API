@@ -24,7 +24,7 @@ public class BoardSteps extends BaseSteps {
             .sendRequest(Resources.RESOURCE, spec);
     }
 
-   @Step("Put board name")
+    @Step("Put board name")
     public Response putBoardName(Board board, RequestSpecification spec, Map<String, String> creds) {
         return ServiceObject
             .builder(creds)

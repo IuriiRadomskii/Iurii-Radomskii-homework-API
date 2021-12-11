@@ -26,7 +26,7 @@ public class ListSteps extends BaseSteps {
     }
 
     @Step("Put list name")
-    public Response putListName(TrelloList  trelloList, RequestSpecification spec, Map<String, String> creds) {
+    public Response putListName(TrelloList trelloList, RequestSpecification spec, Map<String, String> creds) {
         return ServiceObject
             .builder(creds)
             .setMethod(Method.PUT)

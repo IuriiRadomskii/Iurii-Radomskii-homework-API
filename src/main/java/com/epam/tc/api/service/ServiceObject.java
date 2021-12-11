@@ -108,6 +108,5 @@ public class ServiceObject {
         public ServiceObject buildRequest() {
             return new ServiceObject(queryParams, pathParams, requestMethod);
         }
-
     }
 }
