@@ -9,7 +9,6 @@ import com.epam.tc.api.entities.Board;
 import com.epam.tc.api.entities.TrelloList;
 import com.epam.tc.api.service.ServiceObject;
 import com.epam.tc.api.specs.RequestSpecifications;
-import io.qameta.allure.Feature;
 import io.restassured.response.Response;
 import org.hamcrest.Matchers;
 import org.testng.annotations.AfterClass;

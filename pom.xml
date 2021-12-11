@@ -58,12 +58,7 @@
         </dependency> <!-- testng -->
         <dependency>
             <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency> <!-- slf4j -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
+            <artifactId>slf4j-nop</artifactId>
             <version>${slf4j.version}</version>
         </dependency> <!-- slf4j -->
         <dependency>

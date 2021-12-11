@@ -6,7 +6,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.epam.tc.api.data.TrelloDataProvider;
 import com.epam.tc.api.entities.Board;
 import com.epam.tc.api.specs.ResponseSpecs;
-import io.qameta.allure.Feature;
 import io.restassured.response.Response;
 import org.hamcrest.Matchers;
 import org.testng.annotations.AfterMethod;
