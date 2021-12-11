@@ -14,7 +14,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <testng.version>7.4.0</testng.version>
-        <assertj.version>3.20.2</assertj.version>
 
         <slf4j.version>2.0.0-alpha5</slf4j.version>
         <maven-surefire.version>3.0.0-M5</maven-surefire.version>
@@ -58,16 +57,16 @@
             <version>${testng.version}</version>
             <scope>test</scope>
         </dependency> <!-- testng -->
-        <!--<dependency>
+        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>${slf4j.version}</version>
-        </dependency> &lt;!&ndash; slf4j &ndash;&gt;
+        </dependency> <!-- slf4j -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
             <version>${slf4j.version}</version>
-        </dependency> &lt;!&ndash; slf4j &ndash;&gt;-->
+        </dependency> <!-- slf4j -->
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-testng</artifactId>
