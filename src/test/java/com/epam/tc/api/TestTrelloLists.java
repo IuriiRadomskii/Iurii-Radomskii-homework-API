@@ -29,7 +29,7 @@ public class TestTrelloLists extends BaseTest {
 
     @AfterClass
     public void deleteTestBoard() {
-        boardSteps.deleteBoard(testBoard, RequestSpecifications.DEFAULT_SPEC, creds);
+        boardSteps.deleteBoard(testBoard, creds);
     }
 
     @AfterMethod

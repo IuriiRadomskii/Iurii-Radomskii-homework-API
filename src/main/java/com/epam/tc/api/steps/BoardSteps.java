@@ -39,14 +39,14 @@ public class BoardSteps extends BaseSteps {
     }
 
     @Step("Delete board")
-    public Response deleteBoard(Board board, RequestSpecification spec, Map<String, String> creds) {
+    public Response deleteBoard(Board board, Map<String, String> creds) {
         return ServiceObject
             .builder(creds)
             .setMethod(Method.DELETE)
             .addPathParam("resource", Resources.BOARD_RESOURCE)
             .addPathParam("ID", board.getId())
             .buildRequest()
-            .sendRequest(Resources.RESOURCE_ID, spec);
+            .sendRequest(Resources.RESOURCE_ID, DEFAULT_SPEC);
     }
 
     public Board boardToPojo(Response response) {

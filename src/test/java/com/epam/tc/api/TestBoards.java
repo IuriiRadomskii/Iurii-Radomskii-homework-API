@@ -18,7 +18,7 @@ public class TestBoards extends BaseTest {
         if (onSiteBoardID != null) {
             Board board = new Board();
             board.setId(onSiteBoardID);
-            boardSteps.deleteBoard(board, DEFAULT_SPEC, creds);
+            boardSteps.deleteBoard(board, creds);
             onSiteBoardID = null;
         }
     }
@@ -49,7 +49,7 @@ public class TestBoards extends BaseTest {
     public void checkBoardDeleting(Board board) {
         Response createResponse = boardSteps.createBoard(creds);
         Board initBoard = boardSteps.boardToPojo(createResponse);
-        Response deleteResponse = boardSteps.deleteBoard(initBoard, DEFAULT_SPEC, creds);
+        Response deleteResponse = boardSteps.deleteBoard(initBoard, creds);
         boardSteps.checkResponse(deleteResponse, ResponseSpecs.GOOD_DELETE_RESPONSE);
     }
 }
