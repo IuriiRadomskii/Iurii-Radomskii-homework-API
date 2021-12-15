@@ -20,23 +20,25 @@ public class BoardSteps extends BaseSteps {
         return ServiceObject
             .builder(creds)
             .setMethod(Method.POST)
-            .setName("SomeBoard")
+            .setName(getRandomString())
             .addPathParam("resource", Resources.BOARD_RESOURCE)
             .buildRequest()
             .sendRequest(Resources.RESOURCE, DEFAULT_SPEC);
     }
 
-    @Step("Put board name")
-    public Response putBoardName(Board board, RequestSpecification spec, Map<String, String> creds) {
+
+    public Response getBoardByID(Board board, Map<String, String> creds) {
         return ServiceObject
             .builder(creds)
-            .setMethod(Method.PUT)
-            .setName(board.getName())
+            .setMethod(Method.GET)
+            .setName(getRandomString())
             .addPathParam("resource", Resources.BOARD_RESOURCE)
             .addPathParam("ID", board.getId())
             .buildRequest()
-            .sendRequest(Resources.RESOURCE_ID, spec);
+            .sendRequest(Resources.RESOURCE_ID, DEFAULT_SPEC);
     }
+
+
 
     @Step("Delete board")
     public Response deleteBoard(Board board, Map<String, String> creds) {

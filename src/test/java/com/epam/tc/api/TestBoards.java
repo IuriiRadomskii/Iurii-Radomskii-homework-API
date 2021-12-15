@@ -3,9 +3,12 @@ package com.epam.tc.api;
 import static com.epam.tc.api.specs.RequestSpecifications.DEFAULT_SPEC;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.epam.tc.api.data.ParametersName;
+import com.epam.tc.api.data.Resources;
 import com.epam.tc.api.data.TrelloDataProvider;
 import com.epam.tc.api.entities.Board;
-import com.epam.tc.api.specs.ResponseSpecs;
+import com.epam.tc.api.service.ServiceObject;
+import io.restassured.http.Method;
 import io.restassured.response.Response;
 import org.hamcrest.Matchers;
 import org.testng.annotations.AfterMethod;
@@ -24,24 +27,39 @@ public class TestBoards extends BaseTest {
     }
 
     @Test(dataProviderClass = TrelloDataProvider.class, dataProvider = "boardData")
-    public void checkBoardPosting(Board board) {
+    public void checkBoardPosting() {
+        //Create test board
         Response createResponse = boardSteps.createBoard(creds);
         boardSteps.checkGoodResponse(createResponse);
-        Board initBoard = boardSteps.boardToPojo(createResponse);
-        assertThat("Checking initial board name", initBoard.getName(), Matchers.equalTo(board.getName()));
-        onSiteBoardID = initBoard.getId();
+        Board board = boardSteps.boardToPojo(createResponse);
+
+        //Get board from trello
+        Response getResponse = boardSteps.getBoardByID(board, creds);
+        boardSteps.checkGoodResponse(getResponse);
+        Board gotBoard = boardSteps.boardToPojo(createResponse);
+
+        assertThat("Checking initial board name", board.getName(), Matchers.equalTo(board.getName()));
+        onSiteBoardID = board.getId();
     }
 
     @Test(dataProviderClass = TrelloDataProvider.class, dataProvider = "boardData")
-    public void checkBoardUpdating(Board newBoard) {
+    public void checkBoardUpdating(Board board) {
         Response createResponse = boardSteps.createBoard(creds);
         Board initBoard = boardSteps.boardToPojo(createResponse);
-        initBoard.setName(newBoard.getName());
+        initBoard.setName(board.getName());
 
-        Response modifyResponse = boardSteps.putBoardName(initBoard, DEFAULT_SPEC, creds);
+        Response modifyResponse = ServiceObject
+            .builder(creds)
+                     .addPathParam("resource", Resources.BOARD_RESOURCE)
+                     .addPathParam("ID", initBoard.getId())
+                     .setMethod(Method.PUT)
+                     .addQueryParam(ParametersName.NAME, initBoard.getName())
+                     .buildRequest()
+                     .sendRequest(Resources.RESOURCE_ID, DEFAULT_SPEC);
+
         boardSteps.checkGoodResponse(modifyResponse);
         Board board = boardSteps.boardToPojo(modifyResponse);
-        assertThat("Checking put board name", board.getName(), Matchers.equalTo(newBoard.getName()));
+        assertThat("Checking put board name", board.getName(), Matchers.equalTo(board.getName()));
         onSiteBoardID = board.getId();
     }
 
