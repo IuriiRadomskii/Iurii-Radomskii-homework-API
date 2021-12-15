@@ -38,7 +38,6 @@ public class BoardSteps extends BaseSteps {
     }
 
 
-
     @Step("Delete board")
     public Response deleteBoard(Board board, Map<String, String> creds) {
         return ServiceObject

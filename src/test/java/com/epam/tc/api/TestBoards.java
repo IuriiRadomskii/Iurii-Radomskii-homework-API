@@ -1,6 +1,7 @@
 package com.epam.tc.api;
 
 import static com.epam.tc.api.specs.RequestSpecifications.DEFAULT_SPEC;
+import static com.epam.tc.api.specs.ResponseSpecs.GOOD_DELETE_RESPONSE;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.epam.tc.api.data.ParametersName;
@@ -43,7 +44,6 @@ public class TestBoards extends BaseTest {
         onSiteBoardID = gotBoard.getId();
     }
 
-    @Test(dataProviderClass = TrelloDataProvider.class, dataProvider = "boardData")
     public void checkBoardUpdating() {
         //Create test board on trello
         Response createResponse = boardSteps.createBoard(creds);
@@ -67,11 +67,14 @@ public class TestBoards extends BaseTest {
         onSiteBoardID = board.getId();
     }
 
-    @Test(dataProviderClass = TrelloDataProvider.class, dataProvider = "boardData")
-    public void checkBoardDeleting(Board board) {
+    public void checkBoardDeleting() {
+        //Create test board on trello
         Response createResponse = boardSteps.createBoard(creds);
-        Board initBoard = boardSteps.boardToPojo(createResponse);
-        Response deleteResponse = boardSteps.deleteBoard(initBoard, creds);
-        boardSteps.checkGoodResponse(deleteResponse);
+        boardSteps.checkGoodResponse(createResponse);
+        Board board = boardSteps.boardToPojo(createResponse);
+
+        //Delete board
+        Response deleteResponse = boardSteps.deleteBoard(board, creds);
+        boardSteps.checkGoodResponse(deleteResponse, GOOD_DELETE_RESPONSE);
     }
 }

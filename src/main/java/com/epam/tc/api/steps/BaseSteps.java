@@ -13,6 +13,11 @@ public class BaseSteps {
         response.then().spec(ResponseSpecs.GOOD_RESPONSE);
     }
 
+    @Step("Checking the response for compliance with the given response specification ")
+    public void checkGoodResponse(Response response, ResponseSpecification spec) {
+        response.then().spec(spec);
+    }
+
     public String getRandomString() {
         int length = 10;
         return RandomStringUtils.random(10, true, true);
