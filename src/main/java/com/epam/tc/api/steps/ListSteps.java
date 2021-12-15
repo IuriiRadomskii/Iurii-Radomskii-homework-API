@@ -1,5 +1,7 @@
 package com.epam.tc.api.steps;
 
+import static com.epam.tc.api.specs.RequestSpecifications.DEFAULT_SPEC;
+
 import com.epam.tc.api.data.ParametersName;
 import com.epam.tc.api.data.Resources;
 import com.epam.tc.api.entities.Board;
@@ -14,16 +16,28 @@ import java.util.Map;
 public class ListSteps extends BaseSteps {
 
     @Step("Create list")
-    public Response createList(String listName, Board board, RequestSpecification spec, Map<String, String> creds) {
+    public Response createListOnBoard(Board board, Map<String, String> creds) {
         return ServiceObject
             .builder(creds)
             .setMethod(Method.POST)
-            .setName(listName)
+            .setName(getRandomString())
             .addQueryParam("idBoard", board.getId())
             .addPathParam("resource", Resources.LIST_RESOURCE)
             .buildRequest()
-            .sendRequest(Resources.RESOURCE, spec);
+            .sendRequest(Resources.RESOURCE, DEFAULT_SPEC);
     }
+
+    @Step("Put list name")
+    public Response getListFromBoard(TrelloList trelloList, Map<String, String> creds) {
+        return ServiceObject
+            .builder(creds)
+            .setMethod(Method.GET)
+            .addPathParam("resource", Resources.LIST_RESOURCE)
+            .addPathParam("ID", trelloList.getId())
+            .buildRequest()
+            .sendRequest(Resources.RESOURCE_ID, DEFAULT_SPEC);
+    }
+
 
     @Step("Put list name")
     public Response putListName(TrelloList trelloList, RequestSpecification spec, Map<String, String> creds) {

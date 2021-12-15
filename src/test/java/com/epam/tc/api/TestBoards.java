@@ -6,7 +6,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.epam.tc.api.data.ParametersName;
 import com.epam.tc.api.data.Resources;
-import com.epam.tc.api.data.TrelloDataProvider;
 import com.epam.tc.api.entities.Board;
 import com.epam.tc.api.service.ServiceObject;
 import io.restassured.http.Method;

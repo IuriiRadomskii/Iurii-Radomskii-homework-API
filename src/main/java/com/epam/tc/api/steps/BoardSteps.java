@@ -30,7 +30,6 @@ public class BoardSteps extends BaseSteps {
         return ServiceObject
             .builder(creds)
             .setMethod(Method.GET)
-            .setName(getRandomString())
             .addPathParam("resource", Resources.BOARD_RESOURCE)
             .addPathParam("ID", board.getId())
             .buildRequest()

@@ -1,7 +1,6 @@
 package com.epam.tc.api;
 
 import static com.epam.tc.api.specs.RequestSpecifications.DEFAULT_SPEC;
-import static com.epam.tc.api.specs.ResponseSpecs.GOOD_RESPONSE;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.epam.tc.api.data.TrelloDataProvider;
@@ -42,22 +41,28 @@ public class TestTrelloLists extends BaseTest {
         }
     }
 
-    @Test(dataProviderClass = TrelloDataProvider.class, dataProvider = "listData")
-    public void checkListPosting(TrelloList trelloList) {
-        Response createResponse = listSteps
-            .createList(trelloList.getName(), testBoard, RequestSpecifications.DEFAULT_SPEC, creds);
+    @Test
+    public void checkListPosting() {
+        //Create test list
+        Response createResponse = listSteps.createListOnBoard(testBoard, creds);
         listSteps.checkGoodResponse(createResponse);
-
         TrelloList initList = ServiceObject.jsonListToPojo(createResponse);
-        assertThat("Checking initial list name", initList.getName(), Matchers.equalTo(trelloList.getName()));
-        assertThat("Checking lists boardID", initList.getIdBoard(), Matchers.equalTo(testBoard.getId()));
+
+        //Get list from board
+        Response getResponse = listSteps.getListFromBoard(initList, creds);
+        listSteps.checkGoodResponse(getResponse);
+        TrelloList gotList = ServiceObject.jsonListToPojo(getResponse);
+
+        assertThat("Checking initial list name", initList.getName(), Matchers.equalTo(gotList.getName()));
+        assertThat("Checking lists boardID", gotList.getIdBoard(), Matchers.equalTo(testBoard.getId()));
         onSiteListID = initList.getId();
     }
 
-    @Test(dataProviderClass = TrelloDataProvider.class, dataProvider = "listData")
+    @Test
     public void checkListModifying(TrelloList trelloList) {
-        Response createResponse = listSteps
-            .createList(trelloList.getName(), testBoard, RequestSpecifications.DEFAULT_SPEC, creds);
+        //Create test list
+        Response createResponse = listSteps.createListOnBoard(testBoard, creds);
+        listSteps.checkGoodResponse(createResponse);
         TrelloList initList = ServiceObject.jsonListToPojo(createResponse);
 
         initList.setName("newName");
@@ -73,7 +78,7 @@ public class TestTrelloLists extends BaseTest {
     @Test(dataProviderClass = TrelloDataProvider.class, dataProvider = "listData")
     public void checkListArchiving(TrelloList trelloList) {
         Response createResponse = listSteps
-            .createList(trelloList.getName(), testBoard, RequestSpecifications.DEFAULT_SPEC, creds);
+            .createListOnBoard(testBoard, creds);
         TrelloList initList = ServiceObject.jsonListToPojo(createResponse);
 
         Response archiveResponse = listSteps.deleteList(initList, RequestSpecifications.DEFAULT_SPEC, creds);
