@@ -86,18 +86,20 @@ public class TestTrelloLists extends BaseTest {
         onSiteListID = initList.getId();
     }
 
-    @Test(dataProviderClass = TrelloDataProvider.class, dataProvider = "listData")
-    public void checkListArchiving(TrelloList trelloList) {
-        Response createResponse = listSteps
-            .createListOnBoard(testBoard, creds);
+    @Test
+    public void checkListArchiving() {
+        //Create test list
+        Response createResponse = listSteps.createListOnBoard(testBoard, creds);
+        listSteps.checkGoodResponse(createResponse);
         TrelloList initList = ServiceObject.jsonListToPojo(createResponse);
 
-        Response archiveResponse = listSteps.deleteList(initList, RequestSpecifications.DEFAULT_SPEC, creds);
+        //Archive list
+        Response archiveResponse = listSteps.deleteList(initList, creds);
         listSteps.checkGoodResponse(archiveResponse);
-
         TrelloList archivedList = ServiceObject.jsonListToPojo(archiveResponse);
-        assertThat("Checking put list name", archivedList.getName(), Matchers.equalTo(trelloList.getName()));
+
+        assertThat("Compare lists names", archivedList.getName(), Matchers.equalTo(initList.getName()));
         assertThat("Checking lists boardID", archivedList.getIdBoard(), Matchers.equalTo(testBoard.getId()));
-        assertThat("Checking lists status", archivedList.getClosed(), Matchers.equalTo(true));
+        assertThat("Checking 'Closed' status", archivedList.getClosed(), Matchers.equalTo(true));
     }
 }

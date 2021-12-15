@@ -52,7 +52,7 @@ public class ListSteps extends BaseSteps {
     }
 
     @Step("Delete list")
-    public Response deleteList(TrelloList trelloList, RequestSpecification spec, Map<String, String> creds) {
+    public Response deleteList(TrelloList trelloList, Map<String, String> creds) {
         return ServiceObject
             .builder(creds)
             .setMethod(Method.PUT)
@@ -61,6 +61,6 @@ public class ListSteps extends BaseSteps {
             .addPathParam("ID", trelloList.getId())
             .addPathParam("resource_1", Resources.CLOSED)
             .buildRequest()
-            .sendRequest(Resources.RESOURCE_ID_RESOURCE, spec);
+            .sendRequest(Resources.RESOURCE_ID_RESOURCE, DEFAULT_SPEC);
     }
 }
