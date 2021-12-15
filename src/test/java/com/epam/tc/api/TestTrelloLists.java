@@ -46,7 +46,7 @@ public class TestTrelloLists extends BaseTest {
     public void checkListPosting(TrelloList trelloList) {
         Response createResponse = listSteps
             .createList(trelloList.getName(), testBoard, RequestSpecifications.DEFAULT_SPEC, creds);
-        listSteps.checkResponse(createResponse, GOOD_RESPONSE);
+        listSteps.checkGoodResponse(createResponse);
 
         TrelloList initList = ServiceObject.jsonListToPojo(createResponse);
         assertThat("Checking initial list name", initList.getName(), Matchers.equalTo(trelloList.getName()));
@@ -62,7 +62,7 @@ public class TestTrelloLists extends BaseTest {
 
         initList.setName("newName");
         Response modifyResponse = listSteps.putListName(initList, RequestSpecifications.DEFAULT_SPEC, creds);
-        listSteps.checkResponse(modifyResponse, GOOD_RESPONSE);
+        listSteps.checkGoodResponse(modifyResponse);
         TrelloList modifiedList = ServiceObject.jsonListToPojo(modifyResponse);
 
         assertThat("Checking put list name", modifiedList.getName(), Matchers.equalTo("newName"));
@@ -77,7 +77,7 @@ public class TestTrelloLists extends BaseTest {
         TrelloList initList = ServiceObject.jsonListToPojo(createResponse);
 
         Response archiveResponse = listSteps.deleteList(initList, RequestSpecifications.DEFAULT_SPEC, creds);
-        listSteps.checkResponse(archiveResponse, GOOD_RESPONSE);
+        listSteps.checkGoodResponse(archiveResponse);
 
         TrelloList archivedList = ServiceObject.jsonListToPojo(archiveResponse);
         assertThat("Checking put list name", archivedList.getName(), Matchers.equalTo(trelloList.getName()));

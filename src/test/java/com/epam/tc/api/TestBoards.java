@@ -26,7 +26,7 @@ public class TestBoards extends BaseTest {
     @Test(dataProviderClass = TrelloDataProvider.class, dataProvider = "boardData")
     public void checkBoardPosting(Board board) {
         Response createResponse = boardSteps.createBoard(creds);
-        boardSteps.checkResponse(createResponse, ResponseSpecs.GOOD_RESPONSE);
+        boardSteps.checkGoodResponse(createResponse);
         Board initBoard = boardSteps.boardToPojo(createResponse);
         assertThat("Checking initial board name", initBoard.getName(), Matchers.equalTo(board.getName()));
         onSiteBoardID = initBoard.getId();
@@ -39,7 +39,7 @@ public class TestBoards extends BaseTest {
         initBoard.setName(newBoard.getName());
 
         Response modifyResponse = boardSteps.putBoardName(initBoard, DEFAULT_SPEC, creds);
-        boardSteps.checkResponse(modifyResponse, ResponseSpecs.GOOD_RESPONSE);
+        boardSteps.checkGoodResponse(modifyResponse);
         Board board = boardSteps.boardToPojo(modifyResponse);
         assertThat("Checking put board name", board.getName(), Matchers.equalTo(newBoard.getName()));
         onSiteBoardID = board.getId();
@@ -50,6 +50,6 @@ public class TestBoards extends BaseTest {
         Response createResponse = boardSteps.createBoard(creds);
         Board initBoard = boardSteps.boardToPojo(createResponse);
         Response deleteResponse = boardSteps.deleteBoard(initBoard, creds);
-        boardSteps.checkResponse(deleteResponse, ResponseSpecs.GOOD_DELETE_RESPONSE);
+        boardSteps.checkGoodResponse(deleteResponse);
     }
 }
