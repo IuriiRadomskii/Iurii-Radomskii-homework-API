@@ -43,6 +43,7 @@ public class TestBoards extends BaseTest {
         onSiteBoardID = gotBoard.getId();
     }
 
+    @Test
     public void checkBoardUpdating() {
         //Create test board on trello
         Board board = boardSteps.createTestBoard(creds);
@@ -64,6 +65,7 @@ public class TestBoards extends BaseTest {
         onSiteBoardID = board.getId();
     }
 
+    @Test
     public void checkBoardDeleting() {
         //Create test board on trello
         Board board = boardSteps.createTestBoard(creds);
