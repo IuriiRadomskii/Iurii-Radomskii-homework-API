@@ -28,7 +28,7 @@ public class TestBoards extends BaseTest {
 
     @Test
     public void checkBoardPosting() {
-        //Create test board
+        //Create test board on trello
         Response createResponse = boardSteps.createBoard(creds);
         boardSteps.checkGoodResponse(createResponse);
         Board board = boardSteps.boardToPojo(createResponse);
@@ -44,23 +44,26 @@ public class TestBoards extends BaseTest {
     }
 
     @Test(dataProviderClass = TrelloDataProvider.class, dataProvider = "boardData")
-    public void checkBoardUpdating(Board board) {
+    public void checkBoardUpdating() {
+        //Create test board on trello
         Response createResponse = boardSteps.createBoard(creds);
-        Board initBoard = boardSteps.boardToPojo(createResponse);
-        initBoard.setName(board.getName());
+        boardSteps.checkGoodResponse(createResponse);
+        Board board = boardSteps.boardToPojo(createResponse);
 
+        //Put new name to trello board
+        String newName = boardSteps.getRandomString();
         Response modifyResponse = ServiceObject
             .builder(creds)
                      .addPathParam("resource", Resources.BOARD_RESOURCE)
-                     .addPathParam("ID", initBoard.getId())
+                     .addPathParam("ID", board.getId())
                      .setMethod(Method.PUT)
-                     .addQueryParam(ParametersName.NAME, initBoard.getName())
+                     .addQueryParam(ParametersName.NAME, newName)
                      .buildRequest()
                      .sendRequest(Resources.RESOURCE_ID, DEFAULT_SPEC);
-
         boardSteps.checkGoodResponse(modifyResponse);
-        Board f = boardSteps.boardToPojo(modifyResponse);
-        assertThat("Checking put board name", board.getName(), Matchers.equalTo(board.getName()));
+        Board newBoard = boardSteps.boardToPojo(modifyResponse);
+
+        assertThat("Checking put board name", newName, Matchers.equalTo(newBoard.getName()));
         onSiteBoardID = board.getId();
     }
 

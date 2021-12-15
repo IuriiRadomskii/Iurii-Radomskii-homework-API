@@ -13,7 +13,7 @@ public class BaseSteps {
         response.then().spec(ResponseSpecs.GOOD_RESPONSE);
     }
 
-    protected String getRandomString() {
+    public String getRandomString() {
         int length = 10;
         return RandomStringUtils.random(10, true, true);
     }

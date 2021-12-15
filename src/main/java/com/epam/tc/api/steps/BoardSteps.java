@@ -10,7 +10,6 @@ import com.google.gson.reflect.TypeToken;
 import io.qameta.allure.Step;
 import io.restassured.http.Method;
 import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
 import java.util.Map;
 
 public class BoardSteps extends BaseSteps {
