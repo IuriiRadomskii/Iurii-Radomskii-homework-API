@@ -3,11 +3,14 @@ package com.epam.tc.api;
 import static com.epam.tc.api.specs.RequestSpecifications.DEFAULT_SPEC;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.epam.tc.api.data.ParametersName;
+import com.epam.tc.api.data.Resources;
 import com.epam.tc.api.data.TrelloDataProvider;
 import com.epam.tc.api.entities.Board;
 import com.epam.tc.api.entities.TrelloList;
 import com.epam.tc.api.service.ServiceObject;
 import com.epam.tc.api.specs.RequestSpecifications;
+import io.restassured.http.Method;
 import io.restassured.response.Response;
 import org.hamcrest.Matchers;
 import org.testng.annotations.AfterClass;
@@ -59,19 +62,27 @@ public class TestTrelloLists extends BaseTest {
     }
 
     @Test
-    public void checkListModifying(TrelloList trelloList) {
+    public void checkListModifying() {
         //Create test list
         Response createResponse = listSteps.createListOnBoard(testBoard, creds);
         listSteps.checkGoodResponse(createResponse);
         TrelloList initList = ServiceObject.jsonListToPojo(createResponse);
 
-        initList.setName("newName");
-        Response modifyResponse = listSteps.putListName(initList, RequestSpecifications.DEFAULT_SPEC, creds);
+        //Put new list name
+        String newName = boardSteps.getRandomString();
+        Response modifyResponse = ServiceObject
+            .builder(creds)
+            .setMethod(Method.PUT)
+            .setName(newName)
+            .addPathParam("ID", initList.getId())
+            .addPathParam("resource", Resources.LIST_RESOURCE)
+            .buildRequest()
+            .sendRequest(Resources.RESOURCE_ID, DEFAULT_SPEC);
         listSteps.checkGoodResponse(modifyResponse);
-        TrelloList modifiedList = ServiceObject.jsonListToPojo(modifyResponse);
+        TrelloList newList = ServiceObject.jsonListToPojo(modifyResponse);
 
-        assertThat("Checking put list name", modifiedList.getName(), Matchers.equalTo("newName"));
-        assertThat("Checking lists boardID", modifiedList.getIdBoard(), Matchers.equalTo(testBoard.getId()));
+        assertThat("Checking put list name", newList.getName(), Matchers.equalTo(newName));
+        assertThat("Checking lists boardID", newList.getIdBoard(), Matchers.equalTo(testBoard.getId()));
         onSiteListID = initList.getId();
     }
 
