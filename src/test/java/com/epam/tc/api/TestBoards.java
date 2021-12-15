@@ -26,7 +26,7 @@ public class TestBoards extends BaseTest {
         }
     }
 
-    @Test(dataProviderClass = TrelloDataProvider.class, dataProvider = "boardData")
+    @Test
     public void checkBoardPosting() {
         //Create test board
         Response createResponse = boardSteps.createBoard(creds);
@@ -38,8 +38,9 @@ public class TestBoards extends BaseTest {
         boardSteps.checkGoodResponse(getResponse);
         Board gotBoard = boardSteps.boardToPojo(createResponse);
 
-        assertThat("Checking initial board name", board.getName(), Matchers.equalTo(board.getName()));
-        onSiteBoardID = board.getId();
+        assertThat("Compare board from POST response and GET response",
+            board, Matchers.equalTo(gotBoard));
+        onSiteBoardID = gotBoard.getId();
     }
 
     @Test(dataProviderClass = TrelloDataProvider.class, dataProvider = "boardData")
@@ -58,7 +59,7 @@ public class TestBoards extends BaseTest {
                      .sendRequest(Resources.RESOURCE_ID, DEFAULT_SPEC);
 
         boardSteps.checkGoodResponse(modifyResponse);
-        Board board = boardSteps.boardToPojo(modifyResponse);
+        Board f = boardSteps.boardToPojo(modifyResponse);
         assertThat("Checking put board name", board.getName(), Matchers.equalTo(board.getName()));
         onSiteBoardID = board.getId();
     }
