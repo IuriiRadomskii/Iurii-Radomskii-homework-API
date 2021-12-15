@@ -24,7 +24,7 @@ public class TestTrelloLists extends BaseTest {
     public void createTestBoard() {
         testBoard = ServiceObject
             .jsonBoardToPojo(boardSteps
-                .createBoard("testBoard", RequestSpecifications.DEFAULT_SPEC, creds));
+                .createBoard(creds));
     }
 
     @AfterClass

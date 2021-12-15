@@ -1,5 +1,7 @@
 package com.epam.tc.api.steps;
 
+import static com.epam.tc.api.specs.RequestSpecifications.DEFAULT_SPEC;
+
 import com.epam.tc.api.data.Resources;
 import com.epam.tc.api.entities.Board;
 import com.epam.tc.api.service.ServiceObject;
@@ -14,14 +16,14 @@ import java.util.Map;
 public class BoardSteps extends BaseSteps {
 
     @Step("Create board")
-    public Response createBoard(String boardName, RequestSpecification spec, Map<String, String> creds) {
+    public Response createBoard(Map<String, String> creds) {
         return ServiceObject
             .builder(creds)
             .setMethod(Method.POST)
-            .setName(boardName)
+            .setName("SomeBoard")
             .addPathParam("resource", Resources.BOARD_RESOURCE)
             .buildRequest()
-            .sendRequest(Resources.RESOURCE, spec);
+            .sendRequest(Resources.RESOURCE, DEFAULT_SPEC);
     }
 
     @Step("Put board name")
