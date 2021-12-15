@@ -3,13 +3,10 @@ package com.epam.tc.api;
 import static com.epam.tc.api.specs.RequestSpecifications.DEFAULT_SPEC;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.epam.tc.api.data.ParametersName;
 import com.epam.tc.api.data.Resources;
-import com.epam.tc.api.data.TrelloDataProvider;
 import com.epam.tc.api.entities.Board;
 import com.epam.tc.api.entities.TrelloList;
 import com.epam.tc.api.service.ServiceObject;
-import com.epam.tc.api.specs.RequestSpecifications;
 import io.restassured.http.Method;
 import io.restassured.response.Response;
 import org.hamcrest.Matchers;
@@ -39,12 +36,12 @@ public class TestTrelloLists extends BaseTest {
         if (onSiteListID != null) {
             TrelloList trelloList = new TrelloList();
             trelloList.setId(onSiteListID);
-            listSteps.deleteList(trelloList, DEFAULT_SPEC, creds);
+            listSteps.deleteList(trelloList, creds);
             onSiteListID = null;
         }
     }
 
-    @Test
+    @Test()
     public void checkListPosting() {
         //Create test list
         Response createResponse = listSteps.createListOnBoard(testBoard, creds);
