@@ -45,9 +45,7 @@ public class TestBoards extends BaseTest {
 
     public void checkBoardUpdating() {
         //Create test board on trello
-        Response createResponse = boardSteps.createBoard(creds);
-        boardSteps.checkGoodResponse(createResponse);
-        Board board = boardSteps.boardToPojo(createResponse);
+        Board board = boardSteps.createTestBoard(creds);
 
         //Put new name to trello board
         String newName = boardSteps.getRandomString();
@@ -68,9 +66,7 @@ public class TestBoards extends BaseTest {
 
     public void checkBoardDeleting() {
         //Create test board on trello
-        Response createResponse = boardSteps.createBoard(creds);
-        boardSteps.checkGoodResponse(createResponse);
-        Board board = boardSteps.boardToPojo(createResponse);
+        Board board = boardSteps.createTestBoard(creds);
 
         //Delete board
         Response deleteResponse = boardSteps.deleteBoard(board, creds);

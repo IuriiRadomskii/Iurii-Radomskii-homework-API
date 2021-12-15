@@ -5,6 +5,7 @@ import static com.epam.tc.api.specs.RequestSpecifications.DEFAULT_SPEC;
 import com.epam.tc.api.data.Resources;
 import com.epam.tc.api.entities.Board;
 import com.epam.tc.api.service.ServiceObject;
+import com.epam.tc.api.specs.ResponseSpecs;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import io.qameta.allure.Step;
@@ -24,6 +25,20 @@ public class BoardSteps extends BaseSteps {
             .buildRequest()
             .sendRequest(Resources.RESOURCE, DEFAULT_SPEC);
     }
+
+    @Step("Create test board")
+    public Board createTestBoard(Map<String, String> creds) {
+        Response response = ServiceObject
+            .builder(creds)
+            .setMethod(Method.POST)
+            .setName(getRandomString())
+            .addPathParam("resource", Resources.BOARD_RESOURCE)
+            .buildRequest()
+            .sendRequest(Resources.RESOURCE, DEFAULT_SPEC);
+        return boardToPojo(response);
+    }
+
+
 
 
     public Response getBoardByID(Board board, Map<String, String> creds) {
