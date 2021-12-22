@@ -85,16 +85,6 @@ public class ServiceObject {
             return this;
         }
 
-        public RequestBuilder setIdBoard(String boardID) {
-            queryParams.put(ParametersName.ID_BOARD, boardID);
-            return this;
-        }
-
-        public RequestBuilder setIdList(String boardID) {
-            queryParams.put(ParametersName.ID_BOARD, boardID);
-            return this;
-        }
-
         public RequestBuilder addQueryParam(String paramName, String paramValue) {
             queryParams.put(paramName, paramValue);
             return this;

@@ -1,14 +1,13 @@
 package com.epam.tc.api;
 
 import static com.epam.tc.api.specs.RequestSpecifications.DEFAULT_SPEC;
-import static com.epam.tc.api.specs.ResponseSpecs.GOOD_RESPONSE;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.epam.tc.api.data.TrelloDataProvider;
+import com.epam.tc.api.data.Resources;
 import com.epam.tc.api.entities.Board;
 import com.epam.tc.api.entities.TrelloList;
 import com.epam.tc.api.service.ServiceObject;
-import com.epam.tc.api.specs.RequestSpecifications;
+import io.restassured.http.Method;
 import io.restassured.response.Response;
 import org.hamcrest.Matchers;
 import org.testng.annotations.AfterClass;
@@ -24,12 +23,12 @@ public class TestTrelloLists extends BaseTest {
     public void createTestBoard() {
         testBoard = ServiceObject
             .jsonBoardToPojo(boardSteps
-                .createBoard("testBoard", RequestSpecifications.DEFAULT_SPEC, creds));
+                .createBoard(creds));
     }
 
     @AfterClass
     public void deleteTestBoard() {
-        boardSteps.deleteBoard(testBoard, RequestSpecifications.DEFAULT_SPEC, creds);
+        boardSteps.deleteBoard(testBoard, creds);
     }
 
     @AfterMethod
@@ -37,51 +36,67 @@ public class TestTrelloLists extends BaseTest {
         if (onSiteListID != null) {
             TrelloList trelloList = new TrelloList();
             trelloList.setId(onSiteListID);
-            listSteps.deleteList(trelloList, DEFAULT_SPEC, creds);
+            listSteps.deleteList(trelloList, creds);
             onSiteListID = null;
         }
     }
 
-    @Test(dataProviderClass = TrelloDataProvider.class, dataProvider = "listData")
-    public void checkListPosting(TrelloList trelloList) {
-        Response createResponse = listSteps
-            .createList(trelloList.getName(), testBoard, RequestSpecifications.DEFAULT_SPEC, creds);
-        listSteps.checkResponse(createResponse, GOOD_RESPONSE);
-
+    @Test()
+    public void checkListPosting() {
+        //Create test list
+        Response createResponse = listSteps.createListOnBoard(testBoard, creds);
+        listSteps.checkGoodResponse(createResponse);
         TrelloList initList = ServiceObject.jsonListToPojo(createResponse);
-        assertThat("Checking initial list name", initList.getName(), Matchers.equalTo(trelloList.getName()));
-        assertThat("Checking lists boardID", initList.getIdBoard(), Matchers.equalTo(testBoard.getId()));
+
+        //Get list from board
+        Response getResponse = listSteps.getListFromBoard(initList, creds);
+        listSteps.checkGoodResponse(getResponse);
+        TrelloList gotList = ServiceObject.jsonListToPojo(getResponse);
+
+        assertThat("Checking initial list name", initList.getName(), Matchers.equalTo(gotList.getName()));
+        assertThat("Checking lists boardID", gotList.getIdBoard(), Matchers.equalTo(testBoard.getId()));
         onSiteListID = initList.getId();
     }
 
-    @Test(dataProviderClass = TrelloDataProvider.class, dataProvider = "listData")
-    public void checkListModifying(TrelloList trelloList) {
-        Response createResponse = listSteps
-            .createList(trelloList.getName(), testBoard, RequestSpecifications.DEFAULT_SPEC, creds);
+    @Test
+    public void checkListModifying() {
+        //Create test list
+        Response createResponse = listSteps.createListOnBoard(testBoard, creds);
+        listSteps.checkGoodResponse(createResponse);
         TrelloList initList = ServiceObject.jsonListToPojo(createResponse);
 
-        initList.setName("newName");
-        Response modifyResponse = listSteps.putListName(initList, RequestSpecifications.DEFAULT_SPEC, creds);
-        listSteps.checkResponse(modifyResponse, GOOD_RESPONSE);
-        TrelloList modifiedList = ServiceObject.jsonListToPojo(modifyResponse);
+        //Put new list name
+        String newName = boardSteps.getRandomString();
+        Response modifyResponse = ServiceObject
+            .builder(creds)
+            .setMethod(Method.PUT)
+            .setName(newName)
+            .addPathParam("ID", initList.getId())
+            .addPathParam("resource", Resources.LIST_RESOURCE)
+            .buildRequest()
+            .sendRequest(Resources.RESOURCE_ID, DEFAULT_SPEC);
+        listSteps.checkGoodResponse(modifyResponse);
+        TrelloList newList = ServiceObject.jsonListToPojo(modifyResponse);
 
-        assertThat("Checking put list name", modifiedList.getName(), Matchers.equalTo("newName"));
-        assertThat("Checking lists boardID", modifiedList.getIdBoard(), Matchers.equalTo(testBoard.getId()));
+        assertThat("Checking put list name", newList.getName(), Matchers.equalTo(newName));
+        assertThat("Checking lists boardID", newList.getIdBoard(), Matchers.equalTo(testBoard.getId()));
         onSiteListID = initList.getId();
     }
 
-    @Test(dataProviderClass = TrelloDataProvider.class, dataProvider = "listData")
-    public void checkListArchiving(TrelloList trelloList) {
-        Response createResponse = listSteps
-            .createList(trelloList.getName(), testBoard, RequestSpecifications.DEFAULT_SPEC, creds);
+    @Test
+    public void checkListArchiving() {
+        //Create test list
+        Response createResponse = listSteps.createListOnBoard(testBoard, creds);
+        listSteps.checkGoodResponse(createResponse);
         TrelloList initList = ServiceObject.jsonListToPojo(createResponse);
 
-        Response archiveResponse = listSteps.deleteList(initList, RequestSpecifications.DEFAULT_SPEC, creds);
-        listSteps.checkResponse(archiveResponse, GOOD_RESPONSE);
-
+        //Archive list
+        Response archiveResponse = listSteps.deleteList(initList, creds);
+        listSteps.checkGoodResponse(archiveResponse);
         TrelloList archivedList = ServiceObject.jsonListToPojo(archiveResponse);
-        assertThat("Checking put list name", archivedList.getName(), Matchers.equalTo(trelloList.getName()));
+
+        assertThat("Compare lists names", archivedList.getName(), Matchers.equalTo(initList.getName()));
         assertThat("Checking lists boardID", archivedList.getIdBoard(), Matchers.equalTo(testBoard.getId()));
-        assertThat("Checking lists status", archivedList.getClosed(), Matchers.equalTo(true));
+        assertThat("Checking 'Closed' status", archivedList.getClosed(), Matchers.equalTo(true));
     }
 }

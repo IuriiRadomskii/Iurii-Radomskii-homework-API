@@ -3,10 +3,10 @@
 Testing https://api.trello.com. Checking boards and lists features
 
 
-Running all tests: mvn clean test
+Running all tests: `mvn clean test`
 
-Running board tests: mvn clean test -P board-test
+Running board tests: `mvn clean test -P board-test`
 
-Running list tests: mvn clean test -P list-test
+Running list tests: `mvn clean test -P list-test`
 
-Generate allure reports: mvn site
+Generate allure reports after testing: `mvn site`

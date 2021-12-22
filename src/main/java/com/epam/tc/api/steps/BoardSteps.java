@@ -1,50 +1,66 @@
 package com.epam.tc.api.steps;
 
+import static com.epam.tc.api.specs.RequestSpecifications.DEFAULT_SPEC;
+
 import com.epam.tc.api.data.Resources;
 import com.epam.tc.api.entities.Board;
 import com.epam.tc.api.service.ServiceObject;
+import com.epam.tc.api.specs.ResponseSpecs;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import io.qameta.allure.Step;
 import io.restassured.http.Method;
 import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
 import java.util.Map;
 
 public class BoardSteps extends BaseSteps {
 
     @Step("Create board")
-    public Response createBoard(String boardName, RequestSpecification spec, Map<String, String> creds) {
+    public Response createBoard(Map<String, String> creds) {
         return ServiceObject
             .builder(creds)
             .setMethod(Method.POST)
-            .setName(boardName)
+            .setName(getRandomString())
             .addPathParam("resource", Resources.BOARD_RESOURCE)
             .buildRequest()
-            .sendRequest(Resources.RESOURCE, spec);
+            .sendRequest(Resources.RESOURCE, DEFAULT_SPEC);
     }
 
-    @Step("Put board name")
-    public Response putBoardName(Board board, RequestSpecification spec, Map<String, String> creds) {
+    @Step("Create test board")
+    public Board createTestBoard(Map<String, String> creds) {
+        Response response = ServiceObject
+            .builder(creds)
+            .setMethod(Method.POST)
+            .setName(getRandomString())
+            .addPathParam("resource", Resources.BOARD_RESOURCE)
+            .buildRequest()
+            .sendRequest(Resources.RESOURCE, DEFAULT_SPEC);
+        return boardToPojo(response);
+    }
+
+
+
+
+    public Response getBoardByID(Board board, Map<String, String> creds) {
         return ServiceObject
             .builder(creds)
-            .setMethod(Method.PUT)
-            .setName(board.getName())
+            .setMethod(Method.GET)
             .addPathParam("resource", Resources.BOARD_RESOURCE)
             .addPathParam("ID", board.getId())
             .buildRequest()
-            .sendRequest(Resources.RESOURCE_ID, spec);
+            .sendRequest(Resources.RESOURCE_ID, DEFAULT_SPEC);
     }
 
+
     @Step("Delete board")
-    public Response deleteBoard(Board board, RequestSpecification spec, Map<String, String> creds) {
+    public Response deleteBoard(Board board, Map<String, String> creds) {
         return ServiceObject
             .builder(creds)
             .setMethod(Method.DELETE)
             .addPathParam("resource", Resources.BOARD_RESOURCE)
             .addPathParam("ID", board.getId())
             .buildRequest()
-            .sendRequest(Resources.RESOURCE_ID, spec);
+            .sendRequest(Resources.RESOURCE_ID, DEFAULT_SPEC);
     }
 
     public Board boardToPojo(Response response) {
